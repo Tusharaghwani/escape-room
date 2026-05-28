@@ -9,6 +9,40 @@ import string
 import hashlib
 from sqlalchemy import func, text
 import json
+import os
+
+# ─── Gemini AI Answer Checker ───────────────────────────────────────────────
+try:
+    import google.generativeai as genai
+    _GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
+    if _GEMINI_KEY:
+        genai.configure(api_key=_GEMINI_KEY)
+        _gemini_model = genai.GenerativeModel("gemini-1.5-flash")
+    else:
+        _gemini_model = None
+except Exception:
+    _gemini_model = None
+
+def ai_check_answer(question: str, correct_answer: str, user_guess: str) -> bool:
+    """Uses Gemini to semantically check if user_guess is correct for the riddle.
+    Falls back to False (use fuzzy match) if Gemini is unavailable."""
+    if not _gemini_model:
+        return False
+    try:
+        prompt = (
+            f'Riddle: "{question}"\n'
+            f'Correct answer: "{correct_answer}"\n'
+            f'User answered: "{user_guess}"\n\n'
+            f'Is the user\'s answer semantically correct or equivalent to the correct answer? '
+            f'Consider synonyms, alternate phrasings, and partial matches. '
+            f'Reply with ONLY "yes" or "no".'
+        )
+        response = _gemini_model.generate_content(prompt)
+        reply = response.text.strip().lower()
+        return reply.startswith("yes")
+    except Exception as e:
+        print(f"[Gemini] Error: {e}")
+        return False
 
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -302,6 +336,10 @@ def solve_door(door_id: int, request: schemas.GuessRequest, db: Session = Depend
             elif difflib.SequenceMatcher(None, guess_clean, ans).ratio() > 0.8:
                 is_correct = True
                 break
+        
+        # ── AI Semantic Check (Gemini fallback if fuzzy didn't match) ──────
+        if not is_correct and len(guess_clean) >= 2:
+            is_correct = ai_check_answer(door.question, door.answer, request.guess)
 
     
     if is_correct:
@@ -331,6 +369,7 @@ def solve_door(door_id: int, request: schemas.GuessRequest, db: Session = Depend
                             user.points += points_to_add
                 except Exception as e:
                     print(f"[AntiFarm] {e}")
+                    already_solved = True  # Safe fallback: never double-reward on errors
                 db.commit()
 
         # ── System 2: Log this solve for the Trap Predictor ──────────────

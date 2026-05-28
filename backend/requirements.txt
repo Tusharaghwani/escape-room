@@ -4,3 +4,4 @@ sqlalchemy
 numpy
 scikit-learn
 pydantic
+google-generativeai
