@@ -665,7 +665,7 @@ def generate_riddle():
     if _gemini_model:
         try:
             prompt = """Generate a short, unique, and clever riddle for an escape room.
-Return EXACTLY a JSON string like: {"question": "...", "answer": "..."}"""
+Return EXACTLY a JSON string like: {"question": "...", "answer": "word1,word2"} where the answer field contains multiple acceptable correct answers separated by commas."""
             response = _gemini_model.generate_content(prompt)
             text_ans = response.text.replace('```json', '').replace('```', '').strip()
             data = json.loads(text_ans)
