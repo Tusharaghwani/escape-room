@@ -1,30 +1,23 @@
 export function HeroGrid() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#030712]">
-      {/* Animated Gradient Nebula (Zero Lag, Native CSS Gradients) */}
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute w-[150vw] h-[150vh] -top-[25vh] -left-[25vw] animate-slow-spin"
-             style={{
-               background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%)'
-             }} />
-        <div className="absolute w-[150vw] h-[150vh] -top-[25vh] -left-[25vw] animate-slow-spin-reverse"
-             style={{
-               background: 'radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 50%)'
-             }} />
-      </div>
-
-      {/* Crisp Dotted Grid Overlay */}
-      <div className="absolute inset-0 opacity-20"
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0a0510]">
+      {/* Vibrant Neon Grid (2D to avoid 3D lag) */}
+      <div className="absolute inset-0 opacity-30"
            style={{
-             backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
-             backgroundSize: '40px 40px',
+             backgroundImage: 'linear-gradient(rgba(0, 255, 200, 0.3) 2px, transparent 2px), linear-gradient(90deg, rgba(255, 0, 128, 0.3) 2px, transparent 2px)',
+             backgroundSize: '50px 50px',
              backgroundPosition: '0 0',
-             animation: 'pan-grid 60s linear infinite'
+             animation: 'gridFly 2s linear infinite'
            }} />
            
-      {/* Edge Fades for seamless blending */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-[#030712]/80" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030712]/30 to-[#030712]" />
+      {/* Glowing Orbs */}
+      <div className="absolute left-1/4 top-1/4 w-[600px] h-[600px] bg-cyan-500/20 blur-[120px] rounded-full mix-blend-screen animate-pulse" />
+      <div className="absolute right-1/4 bottom-1/4 w-[600px] h-[600px] bg-pink-600/20 blur-[120px] rounded-full mix-blend-screen animate-pulse" style={{ animationDelay: '1s' }} />
+      
+      {/* Scanline overlay */}
+      <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(transparent 50%, rgba(0, 0, 0, 0.5) 50%)', backgroundSize: '100% 4px' }} />
+      
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0510] via-transparent to-[#0a0510]/80" />
     </div>
   );
 }

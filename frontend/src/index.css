@@ -566,3 +566,90 @@ body.theme-light::before {
   0% { background-position: 0 0; }
   100% { background-position: -400px 400px; }
 }
+/* -- Star Particle Animation ------------------------------------ */
+.star-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+  animation: starShoot 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes starShoot {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+}
+
+/* -- Ambient Continuous Wind Effect ----------------------------- */
+.wind-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, transparent 40%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, transparent 60%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 10%, transparent 30%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 40%, transparent 80%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 25%, transparent 50%);
+  background-size: 
+    1400px 3px,
+    900px 2.5px,
+    1800px 2px,
+    1100px 3.5px,
+    1600px 2.5px;
+  background-position: 
+    0 15%, 
+    0 35%, 
+    0 55%, 
+    0 75%, 
+    0 90%;
+  background-repeat: repeat-x;
+  animation: windContinuous 8s linear infinite;
+  filter: blur(1px);
+}
+@keyframes windContinuous {
+  0% { background-position: 0 15%, 0 35%, 0 55%, 0 75%, 0 90%; }
+  100% { background-position: 1400px 15%, 900px 35%, 1800px 55%, 1100px 75%, 1600px 90%; }
+}
+
+/* -- River Effect ----------------------------------------------- */
+.river-flow {
+  position: absolute;
+  bottom: -100px;
+  left: -50%;
+  width: 200%;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  animation: riverWave 12s ease-in-out infinite alternate;
+  filter: blur(20px);
+}
+.river-flow.layer2 {
+  bottom: -150px;
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+  animation: riverWave 18s ease-in-out infinite alternate-reverse;
+  filter: blur(30px);
+}
+@keyframes riverWave {
+  0% { transform: translateX(0) scaleY(1); }
+  50% { transform: translateX(5%) scaleY(1.2); }
+  100% { transform: translateX(-5%) scaleY(0.9); }
+}
+
+/* -- Mobile Performance Overrides ------------------------------ */
+@media (max-width: 1024px) {
+  .wind-overlay, .river-flow, .fog-overlay {
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .wind-overlay {
+    opacity: 0.1 !important;
+  }
+  .river-flow {
+    opacity: 0.15 !important;
+  }
+}
