@@ -212,28 +212,29 @@ function Topbar({ user, activities, onLogout }) {
       background: 'rgba(0,0,0,0.8)',
       backdropFilter: 'blur(16px)',
       borderBottom: '1px solid rgba(255,255,255,0.1)',
-      padding: '0 32px',
-      height: 64,
-      display: 'flex', alignItems: 'center', gap: 24,
+      padding: '0 16px',
+      height: 56,
+      display: 'flex', alignItems: 'center', gap: 12,
+      overflow: 'hidden',
     }}>
       {/* Logo */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+      <div className="topbar-logo" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
         <div style={{
-          width: 30, height: 30, borderRadius: 6,
+          width: 28, height: 28, borderRadius: 6,
           background: 'white',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13
         }}>🔮</div>
-        <span style={{ fontFamily: 'Instrument Serif, serif', fontSize: 22, color: 'white' }}>Maze Terminal</span>
+        <span style={{ fontFamily: 'Instrument Serif, serif', fontSize: 20, color: 'white', whiteSpace: 'nowrap' }}>Maze Terminal</span>
       </div>
 
-      {/* Live pulse ticker */}
-      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+      {/* Live pulse ticker - hidden on mobile via CSS */}
+      <div className="topbar-ticker" style={{ flex: 1, overflow: 'hidden', position: 'relative', minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#ffffff', display: 'inline-block', boxShadow: '0 0 8px #ffffff', animation: 'pulse 2s infinite' }} />
             <span style={{ fontSize: 10, color: '#ffffff', textTransform: 'uppercase', fontFamily: 'JetBrains Mono' }}>LIVE</span>
           </div>
-          <div style={{ overflow: 'hidden', flex: 1 }}>
+          <div style={{ overflow: 'hidden', flex: 1, minWidth: 0 }}>
             <div className="animate-marquee" style={{ display: 'flex', gap: '4rem', whiteSpace: 'nowrap' }}>
               {[...activities, ...activities].map((act, i) => (
                 <span key={i} style={{ fontSize: 12, color: '#64748b', fontFamily: 'JetBrains Mono' }}>
@@ -249,12 +250,12 @@ function Topbar({ user, activities, onLogout }) {
       </div>
 
       {/* User pill */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, marginLeft: 'auto' }}>
         <div style={{
           background: 'rgba(255,255,255,0.05)',
           border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: 8, padding: '6px 12px',
-          display: 'flex', alignItems: 'center', gap: 10
+          borderRadius: 8, padding: '5px 10px',
+          display: 'flex', alignItems: 'center', gap: 8
         }}>
           <div style={{
             width: 20, height: 20, borderRadius: 4,
@@ -265,9 +266,9 @@ function Topbar({ user, activities, onLogout }) {
             {user.username[0].toUpperCase()}
           </div>
           <span style={{ fontSize: 13, fontWeight: 500, color: '#e2e8f0', fontFamily: 'JetBrains Mono' }}>{user.username}</span>
-          <span style={{ fontSize: 13, color: '#94a3b8', fontFamily: 'JetBrains Mono' }}>{user.points || 0} pts</span>
+          <span className="topbar-user-pts" style={{ fontSize: 13, color: '#94a3b8', fontFamily: 'JetBrains Mono' }}>{user.points || 0} pts</span>
         </div>
-        <button onClick={onLogout} className="btn-ghost" style={{ padding: '6px 10px' }} title="Log out">
+        <button onClick={onLogout} className="btn-ghost" style={{ padding: '6px 8px' }} title="Log out">
           ↩
         </button>
       </div>
@@ -370,12 +371,12 @@ function DoorCard({ door, guess, setGuess, onSolve }) {
       )}
 
       {/* Answer input */}
-      <div style={{ display: 'flex', gap: 8 }}>
+      <div className="door-answer-row" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <input
           type="text"
           placeholder={isTrap ? 'Tread carefully...' : isFog ? 'Analyze carefully...' : 'Your answer...'}
           className="input-field"
-          style={{ flex: 1, padding: '10px 14px', fontSize: 14,
+          style={{ flex: 1, minWidth: 0, padding: '10px 14px', fontSize: 14,
                    borderColor: isParadox ? 'rgba(0,255,65,0.3)' : isTrap ? 'rgba(239,68,68,0.3)' : isFog ? 'rgba(168,85,247,0.3)' : isSafe ? 'rgba(59,130,246,0.3)' : undefined }}
           onChange={(e) => setGuess(e.target.value)}
           id={`answer-door-${door.id}`}
@@ -385,7 +386,7 @@ function DoorCard({ door, guess, setGuess, onSolve }) {
           className="btn-primary"
           id={`solve-door-${door.id}`}
           style={{
-            padding: '10px 20px', fontSize: 14, flexShrink: 0,
+            padding: '10px 20px', fontSize: 14, flexShrink: 0, whiteSpace: 'nowrap',
             background: isParadox ? 'linear-gradient(135deg, #065f46, #047857)' :
                         isTrap    ? 'linear-gradient(135deg, #991b1b, #dc2626)' :
                         isFog     ? 'linear-gradient(135deg, #581c87, #7c3aed)' :
