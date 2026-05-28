@@ -933,12 +933,7 @@ function App() {
 
   return (
     <>
-      {/* Ambient Continuous Wind Effect */}
-      <div className="wind-overlay" />
-      
-      {ripples.map(r => (
-        <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
-      ))}
+
     <div onMouseMove={(e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
@@ -1431,12 +1426,6 @@ function App() {
             ✦ About the Maze ✦
           </button>
         </div>
-        
-        {/* River Effect (Bottom of Map) */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden pointer-events-none z-0">
-          <div className="river-flow layer2"></div>
-          <div className="river-flow"></div>
-        </div>
       </section>
 
       {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
@@ -1444,15 +1433,6 @@ function App() {
       {/* Global Click Effects */}
       {ripples.map(r => (
         <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
-      ))}
-      
-      {stars.map(star => (
-        <div key={star.id} className="star-particle" style={{
-          '--dx': `${Math.cos(star.angle) * star.speed * 40}px`,
-          '--dy': `${Math.sin(star.angle) * star.speed * 40}px`,
-          left: star.x,
-          top: star.y
-        }} />
       ))}
       
       </div>

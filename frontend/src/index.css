@@ -92,64 +92,6 @@
   100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
-/* ── Ambient Continuous Wind Effect ───────────────────────────── */
-.wind-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, transparent 40%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, transparent 60%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 10%, transparent 30%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 40%, transparent 80%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 25%, transparent 50%);
-  background-size: 
-    1400px 3px,
-    900px 2.5px,
-    1800px 2px,
-    1100px 3.5px,
-    1600px 2.5px;
-  background-position: 
-    0 15%, 
-    0 35%, 
-    0 55%, 
-    0 75%, 
-    0 90%;
-  background-repeat: repeat-x;
-  animation: windContinuous 8s linear infinite;
-  filter: blur(1px);
-}
-@keyframes windContinuous {
-  0% { background-position: 0 15%, 0 35%, 0 55%, 0 75%, 0 90%; }
-  100% { background-position: 1400px 15%, 900px 35%, 1800px 55%, 1100px 75%, 1600px 90%; }
-}
-
-/* ── Cyber Grid (Auth Screen) ───────────────────────────────── */
-.cyber-grid-container {
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-.cyber-grid {
-  position: absolute;
-  bottom: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: 
-    linear-gradient(rgba(0, 255, 200, 0.4) 1px, transparent 2px),
-    linear-gradient(90deg, rgba(0, 255, 200, 0.4) 1px, transparent 2px);
-  background-size: 60px 60px;
-  transform: rotateX(75deg);
-  transform-origin: top center;
-  animation: gridMove 2s linear infinite;
-  mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
-}
-@keyframes gridMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 60px; }
-}
 @keyframes floatOrb {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
   100% { transform: translate(-40%, -60%) scale(1.2); opacity: 0.8; }
@@ -599,14 +541,28 @@ body.theme-light::before {
 
 /* ── Mobile Performance Overrides ────────────────────────────── */
 @media (max-width: 1024px) {
-  .wind-overlay, .river-flow, .cyber-grid, .fog-overlay {
+  .fog-overlay {
     filter: none !important;
     backdrop-filter: none !important;
   }
-  .wind-overlay {
-    opacity: 0.1 !important;
-  }
-  .river-flow {
-    opacity: 0.15 !important;
-  }
+}
+
+/* ── Minimal Premium Animations ────────────────────────────── */
+@keyframes slow-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes slow-spin-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+.animate-slow-spin {
+  animation: slow-spin 90s linear infinite;
+}
+.animate-slow-spin-reverse {
+  animation: slow-spin-reverse 120s linear infinite;
+}
+@keyframes pan-grid {
+  0% { background-position: 0 0; }
+  100% { background-position: -400px 400px; }
 }
