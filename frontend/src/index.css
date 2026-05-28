@@ -92,6 +92,64 @@
   100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
+/* ── Ambient Continuous Wind Effect ───────────────────────────── */
+.wind-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, transparent 40%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, transparent 60%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 10%, transparent 30%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 40%, transparent 80%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 25%, transparent 50%);
+  background-size: 
+    1400px 3px,
+    900px 2.5px,
+    1800px 2px,
+    1100px 3.5px,
+    1600px 2.5px;
+  background-position: 
+    0 15%, 
+    0 35%, 
+    0 55%, 
+    0 75%, 
+    0 90%;
+  background-repeat: repeat-x;
+  animation: windContinuous 8s linear infinite;
+  filter: blur(1px);
+}
+@keyframes windContinuous {
+  0% { background-position: 0 15%, 0 35%, 0 55%, 0 75%, 0 90%; }
+  100% { background-position: 1400px 15%, 900px 35%, 1800px 55%, 1100px 75%, 1600px 90%; }
+}
+
+/* ── Cyber Grid (Auth Screen) ───────────────────────────────── */
+.cyber-grid-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.cyber-grid {
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 200, 0.4) 1px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.4) 1px, transparent 2px);
+  background-size: 60px 60px;
+  transform: rotateX(75deg);
+  transform-origin: top center;
+  animation: gridMove 2s linear infinite;
+  mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
+}
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 60px; }
+}
 @keyframes floatOrb {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
   100% { transform: translate(-40%, -60%) scale(1.2); opacity: 0.8; }
@@ -541,108 +599,7 @@ body.theme-light::before {
 
 /* ── Mobile Performance Overrides ────────────────────────────── */
 @media (max-width: 1024px) {
-  .fog-overlay {
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
-}
-
-/* ── Minimal Premium Animations ────────────────────────────── */
-@keyframes slow-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-@keyframes slow-spin-reverse {
-  0% { transform: rotate(360deg); }
-  100% { transform: rotate(0deg); }
-}
-.animate-slow-spin {
-  animation: slow-spin 90s linear infinite;
-}
-.animate-slow-spin-reverse {
-  animation: slow-spin-reverse 120s linear infinite;
-}
-@keyframes pan-grid {
-  0% { background-position: 0 0; }
-  100% { background-position: -400px 400px; }
-}
-/* -- Star Particle Animation ------------------------------------ */
-.star-particle {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 100;
-  animation: starShoot 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(255, 255, 255, 0.4);
-}
-
-@keyframes starShoot {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
-}
-
-/* -- Ambient Continuous Wind Effect ----------------------------- */
-.wind-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 20%, transparent 40%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, transparent 60%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 10%, transparent 30%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 40%, transparent 80%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 25%, transparent 50%);
-  background-size: 
-    1400px 3px,
-    900px 2.5px,
-    1800px 2px,
-    1100px 3.5px,
-    1600px 2.5px;
-  background-position: 
-    0 15%, 
-    0 35%, 
-    0 55%, 
-    0 75%, 
-    0 90%;
-  background-repeat: repeat-x;
-  animation: windContinuous 8s linear infinite;
-  filter: blur(1px);
-}
-@keyframes windContinuous {
-  0% { background-position: 0 15%, 0 35%, 0 55%, 0 75%, 0 90%; }
-  100% { background-position: 1400px 15%, 900px 35%, 1800px 55%, 1100px 75%, 1600px 90%; }
-}
-
-/* -- River Effect ----------------------------------------------- */
-.river-flow {
-  position: absolute;
-  bottom: -100px;
-  left: -50%;
-  width: 200%;
-  height: 200px;
-  background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
-  animation: riverWave 12s ease-in-out infinite alternate;
-  filter: blur(20px);
-}
-.river-flow.layer2 {
-  bottom: -150px;
-  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
-  animation: riverWave 18s ease-in-out infinite alternate-reverse;
-  filter: blur(30px);
-}
-@keyframes riverWave {
-  0% { transform: translateX(0) scaleY(1); }
-  50% { transform: translateX(5%) scaleY(1.2); }
-  100% { transform: translateX(-5%) scaleY(0.9); }
-}
-
-/* -- Mobile Performance Overrides ------------------------------ */
-@media (max-width: 1024px) {
-  .wind-overlay, .river-flow, .fog-overlay {
+  .wind-overlay, .river-flow, .cyber-grid, .fog-overlay {
     filter: none !important;
     backdrop-filter: none !important;
   }
@@ -652,46 +609,4 @@ body.theme-light::before {
   .river-flow {
     opacity: 0.15 !important;
   }
-}
-/* ── Auth Screen Dark Animation ── */
-@keyframes orbitalPulse {
-  0% { transform: scale(0.8) rotate(0deg); opacity: 0.1; box-shadow: inset 0 0 50px rgba(160,80,255,0.1); }
-  50% { transform: scale(1.2) rotate(180deg); opacity: 0.3; box-shadow: inset 0 0 100px rgba(160,80,255,0.4); }
-  100% { transform: scale(0.8) rotate(360deg); opacity: 0.1; box-shadow: inset 0 0 50px rgba(160,80,255,0.1); }
-}
-
-.orbital-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 600px;
-  height: 600px;
-  margin-top: -300px;
-  margin-left: -300px;
-  border-radius: 50%;
-  border: 1px solid rgba(160,80,255,0.15);
-  animation: orbitalPulse 15s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.orbital-ring:nth-child(2) {
-  width: 800px;
-  height: 800px;
-  margin-top: -400px;
-  margin-left: -400px;
-  animation: orbitalPulse 20s ease-in-out infinite reverse;
-  animation-delay: -5s;
-}
-
-.glitch-effect-light {
-  animation: lightGlitch 4s infinite;
-}
-
-@keyframes lightGlitch {
-  0% { transform: translate(0) }
-  1% { transform: translate(-2px, 1px) }
-  2% { transform: translate(2px, -1px) }
-  3% { transform: translate(0) }
-  100% { transform: translate(0) }
 }

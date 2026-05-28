@@ -81,8 +81,6 @@ function AuthScreen({ onLogin }) {
     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-black auth-page" style={{ padding: 0 }}>
       {/* Background video */}
       <div className="absolute inset-0 z-0">
-        <div className="orbital-ring" />
-        <div className="orbital-ring" />
         <video autoPlay muted loop playsInline aria-hidden="true" className="w-full h-full object-cover object-center opacity-40">
           <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4" type="video/mp4" />
         </video>
@@ -856,7 +854,7 @@ function App() {
 
   const handleAddHint = async (e) => {
     e.preventDefault();
-    const prefix = hintDoorId ? `[For Door: ${hintDoorId}] ` : '';
+    const prefix = hintDoorId ? `[Door #${hintDoorId}] ` : '';
     try {
       await axios.post(`${API_URL}/rooms/${currentRoomId}/hints`, {
         message: prefix + newHint, creator: user?.username
@@ -935,7 +933,12 @@ function App() {
 
   return (
     <>
-
+      {/* Ambient Continuous Wind Effect */}
+      <div className="wind-overlay" />
+      
+      {ripples.map(r => (
+        <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
+      ))}
     <div onMouseMove={(e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
@@ -989,7 +992,6 @@ function App() {
 
       {/* ── Section 1: Room Hero (Features Section) ── */}
       <section className="relative py-24 lg:py-32 overflow-hidden border-b border-white/5">
-        <div className="wind-overlay" />
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="relative mb-12">
             <div className="grid lg:grid-cols-12 gap-8 items-end">
@@ -1045,7 +1047,7 @@ function App() {
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover object-center glitch-effect-light"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                   style={{ transform: "scaleX(-1)" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
@@ -1200,25 +1202,17 @@ function App() {
                       {!roomData.hints?.length ? (
                         <div className="text-slate-500 font-mono text-xs italic">No echoes in this room yet.</div>
                       ) : (
-                        roomData.hints.map(hint => {
-                          const match = hint.message.match(/^\[(?:For Door:|Door #)\s*(.*?)\]\s*(.*)$/);
-                          const doorTag = match ? match[1] : null;
-                          const actualMessage = match ? match[2] : hint.message;
-                          
-                          return (
+                        roomData.hints.map(hint => (
                           <div key={hint.id} className="p-3 border border-white/10 bg-white/[0.02] rounded-lg">
                             <div className="flex justify-between items-center mb-1">
-                              <span className="text-xs font-bold text-white flex items-center gap-2">
-                                {hint.creator}
-                                {doorTag && <span className="bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded text-[9px] uppercase font-mono truncate max-w-[150px]" title={doorTag}>Door: {doorTag}</span>}
-                              </span>
+                              <span className="text-xs font-bold text-white">{hint.creator}</span>
                               <span className="text-[10px] text-slate-500 font-mono">
                                 {new Date(hint.created_at + "Z").toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               </span>
                             </div>
-                            <p className="text-sm text-slate-300">{actualMessage}</p>
+                            <p className="text-sm text-slate-300">{hint.message}</p>
                           </div>
-                        )})
+                        ))
                       )}
                     </div>
                   ) : (
@@ -1232,13 +1226,11 @@ function App() {
                     <select
                       value={hintDoorId}
                       onChange={(e) => setHintDoorId(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none w-1/3 truncate"
+                      className="bg-white/5 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none"
                     >
                       <option className="bg-slate-900 text-white" value="">General</option>
                       {roomData.doors.map(d => (
-                        <option className="bg-slate-900 text-white" key={d.id} value={d.question}>
-                          {d.question.length > 30 ? d.question.substring(0, 30) + '...' : d.question}
-                        </option>
+                        <option className="bg-slate-900 text-white" key={d.id} value={d.id}>Door #{d.id}</option>
                       ))}
                     </select>
                     <input
@@ -1366,11 +1358,12 @@ function App() {
         </div>
       </nav>
 
-      
-      {/* ── Section 5: Chat & Leaderboard ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden border-t border-white/5 bg-black">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-<div className="w-full max-w-5xl mx-auto grid lg:grid-cols-2 gap-12">
+      {/* ── Section 4: Live Map & Leaderboard ── */}
+      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-4 gap-12">
+          
+          {/* Left Column: Leaderboard & Chat */}
+          <div className="lg:col-span-1 flex flex-col gap-12">
             <div>
               <h3 className="text-3xl font-display text-white mb-6">Leaderboard</h3>
               <div className="flex flex-col gap-3">
@@ -1387,21 +1380,8 @@ function App() {
             </div>
           </div>
           
-
-        </div>
-      </section>
-      <div className="wind-overlay" />
-      <div className="river-flow layer2" />
-      <div className="river-flow layer1" />
-      {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
-      
-      {/* ── Section 4: Live Map & Leaderboard ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-4 gap-12">
-          
-          {/* Left Column: Leaderboard & Chat */}
-                    {/* Right Column: Interactive Map */}
-          <div className="lg:col-span-4">
+          {/* Right Column: Interactive Map */}
+          <div className="lg:col-span-3">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-3xl font-display text-white">Global Maze Structure</h3>
@@ -1424,9 +1404,7 @@ function App() {
 
             <div className="rounded-2xl border border-white/10 overflow-hidden relative h-[800px]"
                  style={{ background: 'radial-gradient(ellipse at bottom, #062233 0%, #020617 80%)' }}>
-              <div className="river-flow layer2"></div>
-              <div className="river-flow"></div>
-              <Orb color="radial-gradient(rgba(99,91,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
+              <Orb color="radial-gradient(rgba(0,255,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
               
               <div className="absolute inset-0 z-10">
                 {treeData.length > 0 ? (
@@ -1453,14 +1431,28 @@ function App() {
             ✦ About the Maze ✦
           </button>
         </div>
+        
+        {/* River Effect (Bottom of Map) */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden pointer-events-none z-0">
+          <div className="river-flow layer2"></div>
+          <div className="river-flow"></div>
+        </div>
       </section>
 
+      {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
+      
       {/* Global Click Effects */}
-      {stars.map(s => (
-        <div key={s.id} className="star-particle" style={{ left: s.x, top: s.y, '--dx': s.dx + 'px', '--dy': s.dy + 'px' }} />
-      ))}
       {ripples.map(r => (
         <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
+      ))}
+      
+      {stars.map(star => (
+        <div key={star.id} className="star-particle" style={{
+          '--dx': `${Math.cos(star.angle) * star.speed * 40}px`,
+          '--dy': `${Math.sin(star.angle) * star.speed * 40}px`,
+          left: star.x,
+          top: star.y
+        }} />
       ))}
       
       </div>
