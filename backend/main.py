@@ -254,6 +254,20 @@ Return EXACTLY a JSON string like: {{"sentiment": "dark", "complexity": 30.5, "i
     
     return db_room
 
+@app.patch("/api/rooms/{room_id}")
+def update_room(room_id: int, data: dict, db: Session = Depends(database.get_db)):
+    """Update a room's answer (supports comma-separated multi-answers)."""
+    room = db.query(models.Room).filter(models.Room.id == room_id).first()
+    if not room:
+        raise HTTPException(status_code=404, detail="Room not found")
+    if "answer" in data:
+        room.answer = data["answer"]
+    if "question" in data:
+        room.question = data["question"]
+    db.commit()
+    db.refresh(room)
+    return {"id": room.id, "question": room.question, "answer": room.answer}
+
 @app.post("/api/analyze")
 def analyze_text(request: schemas.AnalyzeRequest):
     sentiment = "neutral"
