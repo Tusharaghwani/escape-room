@@ -933,6 +933,18 @@ function App() {
 
   return (
     <>
+      {/* Ambient Wind Effect */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {[...Array(12)].map((_, i) => (
+          <div key={`wind-${i}`} className="wind-streak" style={{
+            top: `${Math.random() * 100}vh`,
+            width: `${150 + Math.random() * 400}px`,
+            animationDuration: `${15 + Math.random() * 25}s`,
+            animationDelay: `${-(Math.random() * 20)}s`
+          }} />
+        ))}
+      </div>
+      
       {ripples.map(r => (
         <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
       ))}
