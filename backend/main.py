@@ -190,22 +190,19 @@ def create_room(room: schemas.RoomCreate, db: Session = Depends(database.get_db)
     
     if not room.theme_override:
         # Use Gemini for lightweight theme classification to avoid heavy PyTorch RAM usage
-        try:
-            prompt = f"""Analyze this riddle: "{room.question}"
+        if _gemini_model:
+            try:
+                prompt = f"""Analyze this riddle: "{room.question}"
 Classify it by sentiment (light, dark, or neutral), complexity (0.0 to 100.0, where 20.0 is very complex/foggy, and 80.0 is simple), and paradox (true if it's a logical paradox, false otherwise).
 Return EXACTLY a JSON string like: {{"sentiment": "dark", "complexity": 30.5, "is_paradox": false}}"""
-            res = client.models.generate_content(
-                model='gemini-2.0-flash-exp',
-                contents=prompt
-            )
-            text_ans = res.text.replace('```json', '').replace('```', '').strip()
-            data = json.loads(text_ans)
-            sentiment = data.get("sentiment", "neutral")
-            complexity = float(data.get("complexity", 50.0))
-            is_paradox = bool(data.get("is_paradox", False))
-        except Exception as e:
-            print(f"[ML] Gemini Classification Failed: {e}")
-            pass
+                res = _gemini_model.generate_content(prompt)
+                text_ans = res.text.replace('```json', '').replace('```', '').strip()
+                data = json.loads(text_ans)
+                sentiment = data.get("sentiment", "neutral")
+                complexity = float(data.get("complexity", 50.0))
+                is_paradox = bool(data.get("is_paradox", False))
+            except Exception as e:
+                print(f"[ML] Gemini Classification Failed: {e}")
     
     # Apply user theme override if provided
     if room.theme_override:
@@ -663,12 +660,21 @@ def get_room_warnings(room_id: int):
 @app.get("/api/riddles/generate")
 def generate_riddle():
     """
-    Returns a random riddle from the local bank that hasn't been used in the maze yet.
-    Checks the existing rooms DB to prevent duplicate questions.
-    Zero API cost, instant response.
+    Returns a new riddle generated dynamically by Gemini.
     """
+    if _gemini_model:
+        try:
+            prompt = """Generate a short, unique, and clever riddle for an escape room.
+Return EXACTLY a JSON string like: {"question": "...", "answer": "..."}"""
+            response = _gemini_model.generate_content(prompt)
+            text_ans = response.text.replace('```json', '').replace('```', '').strip()
+            data = json.loads(text_ans)
+            return {"question": data.get("question"), "answer": data.get("answer")}
+        except Exception as e:
+            print(f"[Gemini Generator] Error: {e}")
+            
+    # Fallback to local bank
     try:
-        # Fetch all questions already used in the maze
         used_questions = set()
         with database.engine.connect() as conn:
             rows = conn.execute(text("SELECT question FROM rooms")).fetchall()
@@ -676,7 +682,6 @@ def generate_riddle():
     except Exception:
         used_questions = set()
 
-    # Filter out riddles already in the maze
     available = [
         (q, a) for q, a in riddle_bank.RIDDLES
         if normalize_text(q) not in used_questions
