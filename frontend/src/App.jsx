@@ -1428,7 +1428,7 @@ function App() {
                     orientation="vertical"
                     pathFunc="diagonal"
                     translate={{ x: Math.min(window.innerWidth * 0.75, 1000) / 2, y: 50 }}
-                    nodeSize={{ x: 260, y: 160 }}
+                    nodeSize={{ x: 350, y: 280 }}
                     renderCustomNodeElement={(props) => renderCustomNode(props, heatmap, currentRoomId, handleTravelTo, user)}
                   />
                 ) : (

@@ -70,6 +70,7 @@ _answer_patches = [
     (55, "river,water,nose,engine,pantyhose,refrigerator"),
     (28, "palm,palm tree,hand"),
     (72, "mirror,reflection"),
+    (84, "coin,a coin,coins"),
 ]
 try:
     with database.engine.connect() as conn:
