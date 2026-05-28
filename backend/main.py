@@ -265,14 +265,26 @@ def update_room(room_id: int, data: dict, db: Session = Depends(database.get_db)
     db.refresh(room)
     return {"id": room.id, "question": room.question, "answer": room.answer}
 
+from fastapi import BackgroundTasks
+
 @app.post("/api/admin/expand-answers")
-def expand_all_answers(db: Session = Depends(database.get_db)):
+def expand_all_answers_endpoint(background_tasks: BackgroundTasks):
+    background_tasks.add_task(expand_all_answers_task)
+    return {"message": "Background task to expand answers has been started. It will take around 5 minutes."}
+
+def expand_all_answers_task():
+    db = next(database.get_db())
     rooms = db.query(models.Room).filter(models.Room.id != 1).all()
     updated_count = 0
+    errors = []
     
     for r in rooms:
-        if ',' not in r.answer:
+        if r.answer and ',' not in r.answer:
             try:
+                # Add a sleep to prevent rate limiting (15 RPM free tier limit)
+                import time
+                time.sleep(4.5)
+                
                 prompt = (
                     f'Riddle: "{r.question}"\n'
                     f'Original Answer: "{r.answer}"\n'
@@ -289,10 +301,10 @@ def expand_all_answers(db: Session = Depends(database.get_db)):
                 r.answer = expanded
                 updated_count += 1
             except Exception as e:
-                print(f"Failed to expand room {r.id}: {e}")
+                errors.append(f"Room {r.id}: {str(e)}")
                 
     db.commit()
-    return {"message": f"Successfully expanded answers for {updated_count} rooms."}
+    return {"message": f"Successfully expanded answers for {updated_count} rooms.", "errors": errors}
 
 @app.post("/api/analyze")
 def analyze_text(request: schemas.AnalyzeRequest):
