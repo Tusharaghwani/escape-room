@@ -17,7 +17,7 @@ try:
     _GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
     if _GEMINI_KEY:
         genai.configure(api_key=_GEMINI_KEY)
-        _gemini_model = genai.GenerativeModel("gemini-1.5-pro")
+        _gemini_model = genai.GenerativeModel("gemini-2.0-flash")
     else:
         _gemini_model = None
 except Exception:
@@ -31,18 +31,18 @@ def ai_check_answer(question: str, correct_answer: str, user_guess: str) -> bool
     try:
         prompt = (
             f'Riddle: "{question}"\n'
-            f'Original intended answer: "{correct_answer}"\n'
-            f'User guessed: "{user_guess}"\n\n'
-            f"Evaluate if the user's guess is a valid, logical solution to this riddle. "
-            f'You must be forgiving. If the guess is a synonym, a highly related concept (e.g. "watch" instead of "clock"), or functionally solves the riddle just as well as the original answer, accept it. '
-            f'Return ONLY a valid JSON object with a single boolean key "is_correct". Example: {{"is_correct": true}}'
+            f'Correct answer: "{correct_answer}"\n'
+            f'Player guessed: "{user_guess}"\n\n'
+            f"Is the player's guess a valid answer to this riddle? "
+            f"Be very forgiving: accept synonyms, related concepts, and alternate phrasings (e.g. 'watch' is valid if correct answer is 'clock'). "
+            f'Reply with exactly one word: yes or no.'
         )
         response = _gemini_model.generate_content(prompt)
-        text_ans = response.text.replace('```json', '').replace('```', '').strip()
-        data = json.loads(text_ans)
-        return bool(data.get("is_correct", False))
+        reply = response.text.strip().lower()[:10]  # only look at first 10 chars
+        print(f"[Gemini Check] Q='{question}' correct='{correct_answer}' guess='{user_guess}' reply='{reply}'")
+        return 'yes' in reply
     except Exception as e:
-        print(f"[Gemini Check] Error (possibly Rate Limit): {e}")
+        print(f"[Gemini Check] Error: {e}")
         return False
 
 models.Base.metadata.create_all(bind=database.engine)
@@ -63,6 +63,29 @@ for migration_sql in [
             conn.commit()
     except Exception:
         pass
+
+# ── Startup Data Patches: Fix known narrow answers ─────────────────────────
+_answer_patches = [
+    # (room_id, new_answer)  — add watch as synonym for clock riddle
+    (79, "clock,watch,timepiece,timer"),
+]
+try:
+    with database.engine.connect() as conn:
+        for room_id, new_answer in _answer_patches:
+            row = conn.execute(text("SELECT answer FROM rooms WHERE id=:id"), {"id": room_id}).fetchone()
+            if row:
+                existing = row[0] or ""
+                # Only patch if "watch" isn't already in the answer
+                if "watch" not in existing.lower():
+                    conn.execute(
+                        text("UPDATE rooms SET answer=:a WHERE id=:id"),
+                        {"a": new_answer, "id": room_id}
+                    )
+                    conn.commit()
+                    print(f"[Patch] Room {room_id} answer updated to: {new_answer}")
+except Exception as e:
+    print(f"[Patch] Startup patch failed: {e}")
+
 
 import riddles as riddle_bank
 import random
