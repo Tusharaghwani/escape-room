@@ -854,7 +854,7 @@ function App() {
 
   const handleAddHint = async (e) => {
     e.preventDefault();
-    const prefix = hintDoorId ? `[Door #${hintDoorId}] ` : '';
+    const prefix = hintDoorId ? `[For Door: ${hintDoorId}] ` : '';
     try {
       await axios.post(`${API_URL}/rooms/${currentRoomId}/hints`, {
         message: prefix + newHint, creator: user?.username
@@ -1197,17 +1197,25 @@ function App() {
                       {!roomData.hints?.length ? (
                         <div className="text-slate-500 font-mono text-xs italic">No echoes in this room yet.</div>
                       ) : (
-                        roomData.hints.map(hint => (
+                        roomData.hints.map(hint => {
+                          const match = hint.message.match(/^\[(?:For Door:|Door #)\s*(.*?)\]\s*(.*)$/);
+                          const doorTag = match ? match[1] : null;
+                          const actualMessage = match ? match[2] : hint.message;
+                          
+                          return (
                           <div key={hint.id} className="p-3 border border-white/10 bg-white/[0.02] rounded-lg">
                             <div className="flex justify-between items-center mb-1">
-                              <span className="text-xs font-bold text-white">{hint.creator}</span>
+                              <span className="text-xs font-bold text-white flex items-center gap-2">
+                                {hint.creator}
+                                {doorTag && <span className="bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded text-[9px] uppercase font-mono truncate max-w-[150px]" title={doorTag}>Door: {doorTag}</span>}
+                              </span>
                               <span className="text-[10px] text-slate-500 font-mono">
                                 {new Date(hint.created_at + "Z").toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               </span>
                             </div>
-                            <p className="text-sm text-slate-300">{hint.message}</p>
+                            <p className="text-sm text-slate-300">{actualMessage}</p>
                           </div>
-                        ))
+                        )})
                       )}
                     </div>
                   ) : (
@@ -1221,11 +1229,13 @@ function App() {
                     <select
                       value={hintDoorId}
                       onChange={(e) => setHintDoorId(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-lg p-2 text-sm text-white focus:outline-none"
+                      className="bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none w-1/3 truncate"
                     >
                       <option className="bg-slate-900 text-white" value="">General</option>
                       {roomData.doors.map(d => (
-                        <option className="bg-slate-900 text-white" key={d.id} value={d.id}>Door #{d.id}</option>
+                        <option className="bg-slate-900 text-white" key={d.id} value={d.question}>
+                          {d.question.length > 30 ? d.question.substring(0, 30) + '...' : d.question}
+                        </option>
                       ))}
                     </select>
                     <input

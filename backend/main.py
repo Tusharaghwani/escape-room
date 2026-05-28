@@ -472,8 +472,8 @@ def solve_door(door_id: int, request: schemas.GuessRequest, db: Session = Depend
         # If "stuck" anomaly → inject an auto-nudge hint into this room
         if anomaly and anomaly["type"] == "stuck":
             try:
-                nudge = f"🤖 The Maze AI detected you are stuck. Hint: Think about what '{door.answer[0]}...' could relate to."
-                db_hint = models.Hint(room_id=door_id, creator="🧠 Trap Predictor", message=nudge)
+                nudge = f"🤖 [For Door: {door.question}] The Maze AI detected you are stuck. Hint: Think about what '{door.answer[0]}...' could relate to."
+                db_hint = models.Hint(room_id=door.parent_room_id, creator="🧠 Trap Predictor", message=nudge)
                 db.add(db_hint)
                 db.commit()
                 anomaly["hint_injected"] = True
