@@ -546,12 +546,6 @@ function About({ onBack, isExiting }) {
         </section>
 
       </div>
-      
-      {/* River Effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden pointer-events-none z-0">
-        <div className="river-flow layer2"></div>
-        <div className="river-flow"></div>
-      </div>
     </div>
   );
 }
@@ -939,17 +933,8 @@ function App() {
 
   return (
     <>
-      {/* Ambient Wind Effect */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(12)].map((_, i) => (
-          <div key={`wind-${i}`} className="wind-streak" style={{
-            top: `${Math.random() * 100}vh`,
-            width: `${150 + Math.random() * 400}px`,
-            animationDuration: `${15 + Math.random() * 25}s`,
-            animationDelay: `${-(Math.random() * 20)}s`
-          }} />
-        ))}
-      </div>
+      {/* Ambient Continuous Wind Effect */}
+      <div className="wind-overlay" />
       
       {ripples.map(r => (
         <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
@@ -1441,10 +1426,16 @@ function App() {
         </div>
         
         {/* Footer Link */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-12 relative z-10">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-24 relative z-10">
           <button onClick={handleOpenAbout} className="text-sm font-mono text-cyan-400 font-bold border border-cyan-500/30 px-8 py-4 rounded-full bg-cyan-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
             ✦ About the Maze ✦
           </button>
+        </div>
+        
+        {/* River Effect (Bottom of Map) */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden pointer-events-none z-0">
+          <div className="river-flow layer2"></div>
+          <div className="river-flow"></div>
         </div>
       </section>
 
