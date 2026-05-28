@@ -1143,10 +1143,11 @@ function App() {
                         </p>
                       </div>
                       
-                      <form onSubmit={(e) => { e.preventDefault(); handleSolve(door.id, e.target.elements.guess.value); }} className="flex gap-2">
+                      <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleSolve(door.id, e.target.elements.guess.value); }} className="flex gap-2">
                         <input
                           type="text"
                           name="guess"
+                          autoComplete="off"
                           required
                           placeholder={isTrap ? 'Tread carefully...' : isFog ? 'Analyze carefully...' : 'Your answer...'}
                           className="flex-1 bg-black border border-white/10 rounded-md p-2 text-sm text-white focus:outline-none focus:border-white/30"
