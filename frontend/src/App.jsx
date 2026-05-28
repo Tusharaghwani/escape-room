@@ -505,6 +505,20 @@ function App() {
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('play'); // 'play' | 'forge'
 
+  const [ripples, setRipples] = useState([]);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const newRipple = { x: e.clientX, y: e.clientY, id: Date.now() + Math.random() };
+      setRipples(prev => [...prev, newRipple]);
+      setTimeout(() => {
+        setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+      }, 1800);
+    };
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, []);
+
   // Live draft analysis
   useEffect(() => {
     if (!newQuestion.trim()) {
@@ -798,6 +812,10 @@ function App() {
   const isFog = roomData.complexity_score < 40;
 
   return (
+    <>
+      {ripples.map(r => (
+        <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
+      ))}
     <div onMouseMove={(e) => {
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
@@ -1274,6 +1292,7 @@ function App() {
 
       </div>
     </div>
+    </>
   );
 }
 

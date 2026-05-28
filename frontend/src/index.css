@@ -19,6 +19,40 @@
 /* ── Base Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ── Water Ripple Animation ───────────────────────────────────── */
+@keyframes waterRipple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+.water-ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 1.5px solid rgba(150, 220, 255, 0.7);
+  box-shadow: 0 0 15px rgba(100, 180, 255, 0.5), inset 0 0 15px rgba(100, 180, 255, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  animation: waterRipple 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+.water-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(150, 220, 255, 0.4);
+  animation: waterRipple 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) 0.2s forwards;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
