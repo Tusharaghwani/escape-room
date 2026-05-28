@@ -1,6 +1,8 @@
 # 🧠 Infinite AI Escape Room
 
-Welcome to the Infinite AI Escape Room project! This guide will show you exactly how to boot up the Machine Learning backend and the React frontend from your terminal.
+**[🎮 Play the Live Game Here!](https://escape-room-nine-eta.vercel.app/)**
+
+Welcome to the Infinite AI Escape Room project! This guide will show you exactly how to boot up the Machine Learning backend and the React frontend from your terminal if you want to run it locally.
 
 ---
 
