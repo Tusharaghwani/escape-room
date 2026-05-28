@@ -81,6 +81,8 @@ function AuthScreen({ onLogin }) {
     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-black auth-page" style={{ padding: 0 }}>
       {/* Background video */}
       <div className="absolute inset-0 z-0">
+        <div className="orbital-ring" />
+        <div className="orbital-ring" />
         <video autoPlay muted loop playsInline aria-hidden="true" className="w-full h-full object-cover object-center opacity-40">
           <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4" type="video/mp4" />
         </video>
@@ -1043,7 +1045,7 @@ function App() {
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  className="absolute inset-0 w-full h-full object-cover object-center glitch-effect-light"
                   style={{ transform: "scaleX(-1)" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
@@ -1093,66 +1095,6 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Section 4: Live Map & Leaderboard ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-4 gap-12">
-          
-          {/* Left Column: Leaderboard & Chat */}
-                    {/* Right Column: Interactive Map */}
-          <div className="lg:col-span-4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-3xl font-display text-white">Global Maze Structure</h3>
-                <p className="text-slate-500 text-sm font-mono mt-1">Live tracking of all active agents</p>
-              </div>
-              <div className="flex gap-4 flex-wrap bg-white/5 p-2 rounded-xl border border-white/10">
-                {[
-                  { color: '#ffffff', label: 'You are here' },
-                  { color: '#635bff', label: 'Unsolved' },
-                  { color: '#ef4444', label: 'Trap' },
-                  { color: '#a855f7', label: 'Fog' },
-                ].map(l => (
-                  <div key={l.label} className="flex items-center gap-2 text-xs font-mono text-white">
-                    <div className="w-2 h-2 rounded-full" style={{ background: l.color, boxShadow: `0 0 8px ${l.color}` }} />
-                    {l.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 overflow-hidden relative h-[800px]"
-                 style={{ background: 'radial-gradient(ellipse at bottom, #062233 0%, #020617 80%)' }}>
-              <div className="river-flow layer2"></div>
-              <div className="river-flow"></div>
-              <Orb color="radial-gradient(rgba(0,255,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
-              
-              <div className="absolute inset-0 z-10">
-                {treeData.length > 0 ? (
-                  <Tree
-                    data={treeData}
-                    orientation="vertical"
-                    pathFunc="diagonal"
-                    translate={{ x: Math.min(window.innerWidth * 0.75, 1000) / 2, y: 50 }}
-                    nodeSize={{ x: 260, y: 160 }}
-                    renderCustomNodeElement={(props) => renderCustomNode(props, heatmap, currentRoomId, handleTravelTo, user)}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-slate-500 font-mono">Loading coordinate data...</div>
-                )}
-              </div>
-            </div>
-          </div>
-
-        </div>
-        
-        {/* Footer Link */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-24 relative z-10">
-          <button onClick={handleOpenAbout} className="text-sm font-mono text-cyan-400 font-bold border border-cyan-500/30 px-8 py-4 rounded-full bg-cyan-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
-            ✦ About the Maze ✦
-          </button>
         </div>
       </section>
 
@@ -1453,6 +1395,66 @@ function App() {
       <div className="river-flow layer1" />
       {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
       
+      {/* ── Section 4: Live Map & Leaderboard ── */}
+      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-4 gap-12">
+          
+          {/* Left Column: Leaderboard & Chat */}
+                    {/* Right Column: Interactive Map */}
+          <div className="lg:col-span-4">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-3xl font-display text-white">Global Maze Structure</h3>
+                <p className="text-slate-500 text-sm font-mono mt-1">Live tracking of all active agents</p>
+              </div>
+              <div className="flex gap-4 flex-wrap bg-white/5 p-2 rounded-xl border border-white/10">
+                {[
+                  { color: '#ffffff', label: 'You are here' },
+                  { color: '#635bff', label: 'Unsolved' },
+                  { color: '#ef4444', label: 'Trap' },
+                  { color: '#a855f7', label: 'Fog' },
+                ].map(l => (
+                  <div key={l.label} className="flex items-center gap-2 text-xs font-mono text-white">
+                    <div className="w-2 h-2 rounded-full" style={{ background: l.color, boxShadow: `0 0 8px ${l.color}` }} />
+                    {l.label}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 overflow-hidden relative h-[800px]"
+                 style={{ background: 'radial-gradient(ellipse at bottom, #062233 0%, #020617 80%)' }}>
+              <div className="river-flow layer2"></div>
+              <div className="river-flow"></div>
+              <Orb color="radial-gradient(rgba(99,91,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
+              
+              <div className="absolute inset-0 z-10">
+                {treeData.length > 0 ? (
+                  <Tree
+                    data={treeData}
+                    orientation="vertical"
+                    pathFunc="diagonal"
+                    translate={{ x: Math.min(window.innerWidth * 0.75, 1000) / 2, y: 50 }}
+                    nodeSize={{ x: 260, y: 160 }}
+                    renderCustomNodeElement={(props) => renderCustomNode(props, heatmap, currentRoomId, handleTravelTo, user)}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-slate-500 font-mono">Loading coordinate data...</div>
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        {/* Footer Link */}
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-24 relative z-10">
+          <button onClick={handleOpenAbout} className="text-sm font-mono text-cyan-400 font-bold border border-cyan-500/30 px-8 py-4 rounded-full bg-cyan-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
+            ✦ About the Maze ✦
+          </button>
+        </div>
+      </section>
+
       {/* Global Click Effects */}
       {stars.map(s => (
         <div key={s.id} className="star-particle" style={{ left: s.x, top: s.y, '--dx': s.dx + 'px', '--dy': s.dy + 'px' }} />
