@@ -526,13 +526,23 @@ function About({ onBack, isExiting }) {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
               <h3 className="text-white text-sm mb-2">The Live Map</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">Scroll to the bottom to view the entire maze structure as a node tree. The map highlights the "Heatmap" showing where other players are currently stuck.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Scroll to the bottom to view the entire maze structure as a node tree. The map highlights the "Heatmap" showing where other players are currently stuck. <strong>You can click on any previously solved or adjacent node in the tree to instantly travel to that room!</strong></p>
             </div>
             <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
               <h3 className="text-white text-sm mb-2">The Leaderboard</h3>
               <p className="text-xs text-slate-500 leading-relaxed">Top 10 players by points. Earn 10 points for solving a door, 25 points for forging a custom door, and bonus points when people fail your doors!</p>
             </div>
           </div>
+        </section>
+
+        <section className="mb-16 border border-[#00ff41]/20 bg-[#00ff41]/5 p-6 rounded-xl relative overflow-hidden shadow-[0_0_20px_rgba(0,255,65,0.05)]">
+          <div className="absolute top-0 right-0 p-4 opacity-10">
+            <span className="text-8xl">⊘</span>
+          </div>
+          <h2 className="text-2xl text-[#00ff41] font-display mb-4">✦ The Ultimate Reward</h2>
+          <p className="leading-relaxed text-sm text-[#00ff41]/80 relative z-10">
+            Remember, the maze hides dark secrets and broken logic. If you manage to find and solve a <strong>Paradox Room</strong>, the system will reward you with a massive <strong>+20 POINTS BONUS</strong>! Keep an eye out for contradictions and good luck outsmarting the machine.
+          </p>
         </section>
 
       </div>
@@ -573,11 +583,27 @@ function App() {
   const [activeTab, setActiveTab] = useState('play'); // 'play' | 'forge'
 
   const [ripples, setRipples] = useState([]);
+  const [stars, setStars] = useState([]);
 
   const [showAbout, setShowAbout] = useState(false);
   const [aboutExiting, setAboutExiting] = useState(false);
 
-  const handleOpenAbout = () => {
+  const triggerStars = (x, y) => {
+    const newStars = Array.from({ length: 15 }).map((_, i) => ({
+      id: Date.now() + i,
+      x,
+      y,
+      angle: (i * 24) * (Math.PI / 180),
+      speed: 3 + Math.random() * 3
+    }));
+    setStars(prev => [...prev, ...newStars]);
+    setTimeout(() => {
+      setStars(prev => prev.filter(s => !newStars.find(n => n.id === s.id)));
+    }, 1000);
+  };
+
+  const handleOpenAbout = (e) => {
+    if (e && e.clientX) triggerStars(e.clientX, e.clientY);
     setAboutExiting(false);
     setShowAbout(true);
   };
@@ -1375,13 +1401,27 @@ function App() {
         
         {/* Footer Link */}
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-12 relative z-10">
-          <button onClick={handleOpenAbout} className="text-sm font-mono text-slate-500 hover:text-white transition-colors uppercase tracking-widest">
-            About the Maze
+          <button onClick={handleOpenAbout} className="text-sm font-mono text-cyan-400 font-bold border border-cyan-500/30 px-8 py-4 rounded-full bg-cyan-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
+            ✦ About the Maze ✦
           </button>
         </div>
       </section>
 
       {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
+      
+      {/* Global Click Effects */}
+      {ripples.map(r => (
+        <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
+      ))}
+      
+      {stars.map(star => (
+        <div key={star.id} className="star-particle" style={{
+          '--dx': `${Math.cos(star.angle) * star.speed * 40}px`,
+          '--dy': `${Math.sin(star.angle) * star.speed * 40}px`,
+          left: star.x,
+          top: star.y
+        }} />
+      ))}
       
       </div>
     </div>
