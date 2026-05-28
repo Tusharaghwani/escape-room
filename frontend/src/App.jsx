@@ -473,6 +473,73 @@ function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, han
 }
 
 /* ── Main App ────────────────────────────────────────────────────── */
+function About({ onBack, isExiting }) {
+  return (
+    <div className={`about-page-container ${isExiting ? 'exit' : ''}`}>
+      <div className="max-w-[800px] mx-auto px-6 py-20 text-slate-300 font-mono">
+        
+        <button onClick={onBack} className="badge hover:bg-white/10 transition-colors mb-12 flex items-center gap-2" style={{ cursor: 'pointer', background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white', border: '1px solid', padding: '8px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>
+          ← RETURN TO THE MAZE
+        </button>
+
+        <h1 className="text-5xl font-display text-white mb-4 tracking-tight">About The Infinite Escape Room</h1>
+        <p className="text-sm text-slate-500 uppercase tracking-widest mb-16">Created by Tushar Raghwani</p>
+
+        <section className="mb-16">
+          <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">1. The Purpose</h2>
+          <p className="leading-relaxed mb-4">
+            Welcome to the collective unconscious of the web. This is an infinitely expanding labyrinth where you solve riddles to progress, and if you hit a dead end, you can forge your own doors using AI. The goal? Navigate as deep as possible, solve mysteries, and outsmart the AI and your fellow players.
+          </p>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">2. The Mechanics</h2>
+          <div className="flex flex-col gap-6">
+            <div>
+              <h3 className="text-white mb-2">✦ Solving Doors</h3>
+              <p className="text-sm leading-relaxed text-slate-400">Read the riddle, type your answer. Our AI checker understands synonyms and concepts, so you don't need the exact word if the meaning is right.</p>
+            </div>
+            <div>
+              <h3 className="text-white mb-2">✦ Forging Doors</h3>
+              <p className="text-sm leading-relaxed text-slate-400">At a dead end? Forge a new door! Write a custom riddle or let the AI generate one. If players fail to solve your door, you earn passive points.</p>
+            </div>
+            <div>
+              <h3 className="text-[#a855f7] mb-2">🌫 Fog of War & Complexity</h3>
+              <p className="text-sm leading-relaxed text-slate-400">The AI calculates a Complexity Score (0-100) for every door based on the riddle's difficulty. Rooms with a score below 40 are covered in a cognitive "Fog of War" that obscures the UI.</p>
+            </div>
+            <div>
+              <h3 className="text-[#ef4444] mb-2">⚠ Warnings & Themes</h3>
+              <p className="text-sm leading-relaxed text-slate-400">The AI analyzes the sentiment of the riddle (Light, Dark, or Neutral). Dark riddles trigger trap warnings. The system also learns from failed players—if many players guess the same wrong answer (a trap), the AI will warn you about it when you enter the room!</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">3. Paradoxes</h2>
+          <p className="leading-relaxed mb-4 text-sm text-slate-400">
+            A Paradox is a room containing a logical contradiction that breaks the simulation (e.g., Door #19: "I am a statement that is entirely false. Everything I say is a lie..."). The AI detects these automatically. Solving a paradox grants a massive +20 points bonus, but beware—their solutions are often abstract!
+          </p>
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">4. Tools of Survival</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+              <h3 className="text-white text-sm mb-2">The Live Map</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">Scroll to the bottom to view the entire maze structure as a node tree. The map highlights the "Heatmap" showing where other players are currently stuck.</p>
+            </div>
+            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+              <h3 className="text-white text-sm mb-2">The Leaderboard</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">Top 10 players by points. Earn 10 points for solving a door, 25 points for forging a custom door, and bonus points when people fail your doors!</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [currentRoomId, setCurrentRoomId] = useState(1);
   const [roomData, setRoomData] = useState(null);
@@ -506,6 +573,22 @@ function App() {
   const [activeTab, setActiveTab] = useState('play'); // 'play' | 'forge'
 
   const [ripples, setRipples] = useState([]);
+
+  const [showAbout, setShowAbout] = useState(false);
+  const [aboutExiting, setAboutExiting] = useState(false);
+
+  const handleOpenAbout = () => {
+    setAboutExiting(false);
+    setShowAbout(true);
+  };
+  
+  const handleCloseAbout = () => {
+    setAboutExiting(true);
+    setTimeout(() => {
+      setShowAbout(false);
+      setAboutExiting(false);
+    }, 650); // match animation duration
+  };
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -1289,8 +1372,17 @@ function App() {
           </div>
 
         </div>
+        
+        {/* Footer Link */}
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-12 relative z-10">
+          <button onClick={handleOpenAbout} className="text-sm font-mono text-slate-500 hover:text-white transition-colors uppercase tracking-widest">
+            About the Maze
+          </button>
+        </div>
       </section>
 
+      {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
+      
       </div>
     </div>
     </>
