@@ -950,7 +950,7 @@ function App() {
       <HeroGrid />
     <div className="bg-black text-white min-h-screen">
       {/* ML status badges */}
-      <div className="ml-badge-stack fixed top-20 right-6 z-50 flex flex-col gap-2 items-end pointer-events-none">
+      <div className="ml-badge-stack hidden lg:flex fixed top-20 right-6 z-50 flex-col gap-2 items-end pointer-events-none">
         {[
           { show: true, label: `VIBE: ${sentiment.toUpperCase()}`, color: sentiment === 'dark' ? '#ef4444' : sentiment === 'light' ? '#3b82f6' : '#475569' },
           { show: true, label: `COMPLEXITY: ${Math.round(roomData.complexity_score)}${isFog ? ' 🌫' : ''}`, color: isFog ? '#a855f7' : '#475569' },
@@ -1153,7 +1153,7 @@ function App() {
                       className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-slate-600 focus:outline-none focus:border-white/30 resize-none h-24"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-mono text-slate-400 uppercase tracking-widest block mb-2">Answer (Secret Key)</label>
                       <input

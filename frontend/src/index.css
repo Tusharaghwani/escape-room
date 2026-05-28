@@ -596,3 +596,17 @@ body.theme-light::before {
 .mono {
   font-family: 'JetBrains Mono', monospace;
 }
+
+/* ── Mobile Performance Overrides ────────────────────────────── */
+@media (max-width: 1024px) {
+  .wind-overlay, .river-flow, .cyber-grid, .fog-overlay {
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .wind-overlay {
+    opacity: 0.1 !important;
+  }
+  .river-flow {
+    opacity: 0.15 !important;
+  }
+}
