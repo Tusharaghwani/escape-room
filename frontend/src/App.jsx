@@ -484,7 +484,18 @@ function About({ onBack, isExiting }) {
         </button>
 
         <h1 className="text-5xl font-display text-white mb-4 tracking-tight">About The Infinite Escape Room</h1>
-        <p className="text-sm text-slate-500 uppercase tracking-widest mb-16">Created by Tushar Raghwani</p>
+        <p className="text-sm text-slate-500 uppercase tracking-widest mb-8">Created by Tushar Raghwani</p>
+
+        {/* Desktop recommendation - only shown on mobile */}
+        <div className="mobile-desktop-notice">
+          <span style={{ fontSize: 22, flexShrink: 0 }}>🖥️</span>
+          <div>
+            <div style={{ fontWeight: 700, color: '#fff', fontSize: 13, marginBottom: 3 }}>For best experience, use Desktop</div>
+            <div style={{ fontSize: 11, color: '#94a3b8', lineHeight: 1.5 }}>
+              The live map, animations, and full layout are optimised for desktop browsers. Mobile gives you the core gameplay but misses the full visual experience.
+            </div>
+          </div>
+        </div>
 
         <section className="mb-16">
           <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">1. The Purpose</h2>

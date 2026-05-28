@@ -601,65 +601,109 @@ body.theme-light::before {
 html, body {
   overflow-x: hidden;
   width: 100%;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
-/* ── Mobile Performance Overrides ────────────────────────────── */
+/* ── Mobile desktop recommendation notice ─────────────────────── */
+.mobile-desktop-notice {
+  display: none; /* hidden on desktop by default */
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(99,91,255,0.3);
+  background: rgba(99,91,255,0.08);
+  border-radius: 12px;
+  margin-bottom: 28px;
+}
+
+/* ── Tablet / Mobile Performance Overrides ────────────────────── */
 @media (max-width: 1024px) {
-  .wind-overlay, .river-flow, .cyber-grid, .fog-overlay {
-    filter: none !important;
-    backdrop-filter: none !important;
+  /* Kill ALL animations - the single biggest performance win */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
-  .wind-overlay {
-    opacity: 0.1 !important;
+
+  /* Remove moving backgrounds entirely */
+  .wind-overlay, .river-flow, .cyber-grid {
+    display: none !important;
   }
-  .river-flow {
-    opacity: 0.15 !important;
+
+  /* Remove the moving body grid/gradient background */
+  body::before, body::after {
+    display: none !important;
   }
-  /* Disable heavy glass blur on mobile for performance */
-  .glass, .glass-strong {
+
+  /* Kill all blur effects (major GPU hog) */
+  .glass, .glass-strong, .fog-overlay, .orb {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    filter: none !important;
   }
-  /* Disable card hover transforms on touch devices */
-  .door-card:hover, .card-hover:hover, .hover-lift:hover {
+
+  /* Keep fog-overlay working but without the blur */
+  .fog-overlay {
+    display: none !important;
+  }
+
+  /* Disable hover transforms */
+  .door-card:hover, .card-hover:hover, .hover-lift:hover, .btn-primary:hover {
     transform: none !important;
-  }
-  /* Disable body background animation */
-  body::before, body::after {
-    display: none;
   }
 }
 
-/* ── Mobile Layout Fixes ──────────────────────────────────────── */
+/* ── Mobile Layout Fixes (phones ≤ 768px) ────────────────────── */
 @media (max-width: 768px) {
-  /* Topbar: hide ticker, keep logo + user */
-  .topbar-ticker { display: none !important; }
+  /* Show the desktop recommendation notice on mobile */
+  .mobile-desktop-notice {
+    display: flex !important;
+  }
+
+  /* Topbar: hide ticker and points to save space */
+  .topbar-ticker  { display: none !important; }
   .topbar-user-pts { display: none !important; }
 
-  /* Section headings: scale down massive display fonts */
-  .text-\[128px\] { font-size: 48px !important; line-height: 1.05 !important; }
-  .text-7xl  { font-size: 44px !important; line-height: 1.05 !important; }
-  .text-6xl  { font-size: 36px !important; line-height: 1.1 !important; }
-  .text-5xl  { font-size: 28px !important; }
-  .text-4xl  { font-size: 24px !important; }
+  /* Ensure all text wraps and never overflows */
+  * {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    min-width: 0 !important;
+  }
+  /* Exception: don't break button/badge text weirdly */
+  button, .badge, input, select, textarea {
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
 
-  /* Uncap max-width on paragraphs so they don't exceed screen */
-  .max-w-lg, .max-w-md, .max-w-xl, .max-w-2xl {
+  /* Scale down massive display headings */
+  .text-\[128px\] { font-size: 44px !important; line-height: 1.1 !important; }
+  .text-7xl       { font-size: 40px !important; line-height: 1.1 !important; }
+  .text-6xl       { font-size: 34px !important; line-height: 1.15 !important; }
+  .text-5xl       { font-size: 28px !important; }
+  .text-4xl       { font-size: 22px !important; }
+  .text-3xl       { font-size: 20px !important; }
+
+  /* Uncap widths that could cause overflow */
+  .max-w-lg, .max-w-md, .max-w-xl, .max-w-2xl, .max-w-\[1400px\] {
     max-width: 100% !important;
   }
 
-  /* Section container: tighten horizontal padding */
+  /* Reduce horizontal padding */
   .px-6  { padding-left: 14px !important; padding-right: 14px !important; }
   .px-12 { padding-left: 14px !important; padding-right: 14px !important; }
   .p-8   { padding: 16px !important; }
   .p-12  { padding: 16px !important; }
 
-  /* Reduce vertical section spacing */
-  .py-24 { padding-top: 40px !important; padding-bottom: 40px !important; }
-  .py-32 { padding-top: 48px !important; padding-bottom: 48px !important; }
-  .mb-20 { margin-bottom: 32px !important; }
+  /* Reduce vertical spacing */
+  .py-24 { padding-top: 36px !important; padding-bottom: 36px !important; }
+  .py-32 { padding-top: 44px !important; padding-bottom: 44px !important; }
+  .mb-20 { margin-bottom: 28px !important; }
+  .gap-12 { gap: 20px !important; }
+  .gap-8  { gap: 14px !important; }
 
-  /* Door card: make answer + button stack on tiny screens */
+  /* Door answer row: stack input and button vertically */
   .door-answer-row {
     flex-direction: column !important;
   }
@@ -667,29 +711,27 @@ html, body {
     width: 100% !important;
   }
 
-  /* All grids: single column on mobile */
+  /* Force all grids to single column */
   [class*="lg:grid-cols-"],
   [class*="md:grid-cols-"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* Prevent overflow-hidden sections from clipping inline text */
-  section.overflow-hidden {
-    overflow-x: clip !important;
-    overflow-y: visible !important;
-  }
+  /* Remove overflow-hidden that clips text */
+  section { overflow: visible !important; }
 
-  /* Image panel (right side on hero) - hide on mobile */
-  .shrink-0.w-\[42\%\] { display: none !important; }
+  /* Hide heavy right-side image panel on hero */
+  .shrink-0 { display: none !important; }
 
-  /* ML badge stack: hide on mobile to save space */
+  /* Hide ML badge and tree map (too heavy / too small) */
   .ml-badge-stack { display: none !important; }
+  .h-\[800px\] { height: 360px !important; }
 
-  /* Tree map: constrain height on mobile */
-  .h-\[800px\] { height: 420px !important; }
-
-  /* Forge gap */
-  .gap-12 { gap: 24px !important; }
-  .gap-8  { gap: 16px !important; }
+  /* About page: reduce padding */
+  .about-page-container .max-w-\[800px\] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 60px !important;
+  }
 }
 
