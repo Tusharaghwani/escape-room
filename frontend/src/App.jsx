@@ -587,6 +587,7 @@ function App() {
 
   const [showAbout, setShowAbout] = useState(false);
   const [aboutExiting, setAboutExiting] = useState(false);
+  const [showEchoes, setShowEchoes] = useState(false);
 
   const triggerStars = (x, y) => {
     const newStars = Array.from({ length: 15 }).map((_, i) => ({
@@ -734,6 +735,7 @@ function App() {
       setRoomData(res.data);
       setGuess('');
       setError('');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       if (err.response?.status === 404 && id === 1) {
         try {
@@ -773,6 +775,8 @@ function App() {
           setAnomaly(null);
           setMlWarning(null);
           setFailureCount(0);
+          setShowEchoes(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           if (!res.data.points_awarded) {
             setSuccess('✓ Correct! (Room already solved — no bonus this time)');
           } else {
@@ -794,7 +798,10 @@ function App() {
         setError('Incorrect answer. Try again or pick another door.');
         if (res.data.anomaly) {
           setAnomaly(res.data.anomaly);
-          if (res.data.anomaly.hint_injected) fetchRoomData(currentRoomId);
+          if (res.data.anomaly.hint_injected) {
+            fetchRoomData(currentRoomId);
+            setShowEchoes(true);
+          }
         }
         fetchWarnings(doorId);
       }
@@ -867,6 +874,8 @@ function App() {
       const updated = { ...user, current_room_id: parentId };
       setUser(updated);
       localStorage.setItem('escape_room_user', JSON.stringify(updated));
+      setShowEchoes(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {}
   };
 
@@ -877,6 +886,8 @@ function App() {
       const updated = { ...user, current_room_id: roomId };
       setUser(updated);
       localStorage.setItem('escape_room_user', JSON.stringify(updated));
+      setShowEchoes(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {}
   };
 
@@ -1175,26 +1186,38 @@ function App() {
                 <div className="flex flex-col pt-8 lg:pt-0 lg:pl-12 lg:border-l border-white/10">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-display text-white">Echoes (Chat)</h3>
-                    <span className="text-xs bg-white/10 px-2 py-1 rounded-full">{roomData.hints?.length || 0}</span>
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => setShowEchoes(!showEchoes)} className="text-[10px] uppercase font-bold text-cyan-400 border border-cyan-500/30 px-2 py-1 rounded hover:bg-cyan-500/10">
+                        {showEchoes ? 'Hide' : 'Reveal'}
+                      </button>
+                      <span className="text-xs bg-white/10 px-2 py-1 rounded-full">{roomData.hints?.length || 0}</span>
+                    </div>
                   </div>
                   
-                  <div className="overflow-y-auto pr-2 flex flex-col gap-3 mb-4 h-[300px]">
-                    {!roomData.hints?.length ? (
-                      <div className="text-slate-500 font-mono text-xs italic">No echoes in this room yet.</div>
-                    ) : (
-                      roomData.hints.map(hint => (
-                        <div key={hint.id} className="p-3 border border-white/10 bg-white/[0.02] rounded-lg">
-                          <div className="flex justify-between items-center mb-1">
-                            <span className="text-xs font-bold text-white">{hint.creator}</span>
-                            <span className="text-[10px] text-slate-500 font-mono">
-                              {new Date(hint.created_at + "Z").toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
+                  {showEchoes ? (
+                    <div className="overflow-y-auto pr-2 flex flex-col gap-3 mb-4 h-[300px]">
+                      {!roomData.hints?.length ? (
+                        <div className="text-slate-500 font-mono text-xs italic">No echoes in this room yet.</div>
+                      ) : (
+                        roomData.hints.map(hint => (
+                          <div key={hint.id} className="p-3 border border-white/10 bg-white/[0.02] rounded-lg">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-xs font-bold text-white">{hint.creator}</span>
+                              <span className="text-[10px] text-slate-500 font-mono">
+                                {new Date(hint.created_at + "Z").toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+                            <p className="text-sm text-slate-300">{hint.message}</p>
                           </div>
-                          <p className="text-sm text-slate-300">{hint.message}</p>
-                        </div>
-                      ))
-                    )}
-                  </div>
+                        ))
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-[300px] border border-white/5 bg-white/[0.02] rounded-lg mb-4 p-4 text-center">
+                      <p className="text-sm text-slate-400 font-mono mb-4">Echoes (hints from others) are hidden by default to prevent spoilers.</p>
+                      <button onClick={() => setShowEchoes(true)} className="btn-secondary text-xs">Reveal Echoes</button>
+                    </div>
+                  )}
 
                   <form onSubmit={handleAddHint} className="flex gap-2">
                     <select
