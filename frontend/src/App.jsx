@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Tree from 'react-d3-tree';
 import { BlurWord } from './components/ui/blur-word';
@@ -10,7 +10,7 @@ import { InfraLines } from './components/ui/infra-lines';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
-/* ── Micro-components ───────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Micro-components ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 const Orb = ({ color, size, x, y, opacity = 0.35 }) => (
   <div className="orb" style={{
     background: color, width: size, height: size,
@@ -42,7 +42,7 @@ const StatCard = ({ icon, label, value, accent = '#635bff' }) => (
   </div>
 );
 
-/* ── Auth Screen ─────────────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Auth Screen ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function AuthScreen({ onLogin }) {
   const [mode, setMode] = useState('login');
   const [username, setUsername] = useState('');
@@ -81,6 +81,8 @@ function AuthScreen({ onLogin }) {
     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-black auth-page" style={{ padding: 0 }}>
       {/* Background video */}
       <div className="absolute inset-0 z-0">
+        <div className="orbital-ring" />
+        <div className="orbital-ring" />
         <video autoPlay muted loop playsInline aria-hidden="true" className="w-full h-full object-cover object-center opacity-40">
           <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4" type="video/mp4" />
         </video>
@@ -115,7 +117,7 @@ function AuthScreen({ onLogin }) {
 
           {/* Feature pills */}
           <div className={`flex flex-wrap gap-3 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            {['🧠 AI Analysis', '🌫 Fog of War', '⊘ Paradox Detection', '🗺 Live Map'].map(f => (
+            {['ÃƒÂ°Ã…Â¸Ã‚Â§Ã‚Â  AI Analysis', 'ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« Fog of War', 'ÃƒÂ¢Ã…Â Ã‹Å“ Paradox Detection', 'ÃƒÂ°Ã…Â¸Ã¢â‚¬â€Ã‚Âº Live Map'].map(f => (
               <div key={f} className="text-[12px] text-slate-300 px-4 py-2 rounded-full font-mono uppercase tracking-wider"
                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 {f}
@@ -135,7 +137,7 @@ function AuthScreen({ onLogin }) {
                   background: 'linear-gradient(135deg, #635bff, #a78bfa)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 14, boxShadow: '0 8px 24px rgba(99,91,255,0.3)'
-                }}>🔮</div>
+                }}>ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â®</div>
                 <span style={{ fontFamily: 'Instrument Serif, serif', fontSize: 28, color: 'white' }}>
                   Terminal Access
                 </span>
@@ -159,7 +161,7 @@ function AuthScreen({ onLogin }) {
             {error && (
               <div className="mb-6 p-3 rounded-xl text-sm text-red-300 flex items-center gap-2"
                    style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)' }}>
-                <span>⚠</span> {error}
+                <span>ÃƒÂ¢Ã…Â¡Ã‚Â </span> {error}
               </div>
             )}
 
@@ -180,7 +182,7 @@ function AuthScreen({ onLogin }) {
                   required type="password" value={password}
                   onChange={e => setPassword(e.target.value)}
                   className="input-field font-mono"
-                  placeholder="••••••••"
+                  placeholder="ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢"
                   style={{ background: 'rgba(0,0,0,0.5)' }}
                 />
               </div>
@@ -204,7 +206,7 @@ function AuthScreen({ onLogin }) {
   );
 }
 
-/* ── Topbar ─────────────────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Topbar ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function Topbar({ user, activities, onLogout }) {
   return (
     <header style={{
@@ -222,7 +224,7 @@ function Topbar({ user, activities, onLogout }) {
           width: 30, height: 30, borderRadius: 6,
           background: 'white',
           display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14
-        }}>🔮</div>
+        }}>ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ‚Â®</div>
         <span style={{ fontFamily: 'Instrument Serif, serif', fontSize: 22, color: 'white' }}>Maze Terminal</span>
       </div>
 
@@ -268,21 +270,21 @@ function Topbar({ user, activities, onLogout }) {
           <span style={{ fontSize: 13, color: '#94a3b8', fontFamily: 'JetBrains Mono' }}>{user.points || 0} pts</span>
         </div>
         <button onClick={onLogout} className="btn-ghost" style={{ padding: '6px 10px' }} title="Log out">
-          ↩
+          ÃƒÂ¢Ã¢â‚¬Â Ã‚Â©
         </button>
       </div>
     </header>
   );
 }
 
-/* ── Leaderboard ────────────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Leaderboard ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function Leaderboard({ entries, currentUser }) {
   const medals = ['1', '2', '3'];
   return (
     <div className="glass rounded-xl overflow-hidden">
       <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,0.05)',
                     display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 14 }}>🏆</span>
+        <span style={{ fontSize: 14 }}>ÃƒÂ°Ã…Â¸ Ã¢â‚¬Â </span>
         <span style={{ fontSize: 10, fontFamily: 'JetBrains Mono', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Leaderboard</span>
       </div>
       <div style={{ padding: '8px 0' }}>
@@ -308,7 +310,7 @@ function Leaderboard({ entries, currentUser }) {
   );
 }
 
-/* ── Door Card ──────────────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Door Card ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function DoorCard({ door, guess, setGuess, onSolve }) {
   const isParadox = door.is_paradox;
   const isTrap    = door.sentiment === 'dark' && !isParadox;
@@ -323,10 +325,10 @@ function DoorCard({ door, guess, setGuess, onSolve }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 12, color: '#64748b', fontFamily: 'JetBrains Mono', fontWeight: 600 }}>DOOR #{door.id}</span>
-          {isTrap    && <Badge variant="trap">⚠ Trap Room</Badge>}
-          {isFog     && <Badge variant="fog">🌫 Fog Room</Badge>}
-          {isSafe    && <Badge variant="safe">✓ Safe Node</Badge>}
-          {isParadox && <Badge variant="paradox">⊘ Paradox</Badge>}
+          {isTrap    && <Badge variant="trap">ÃƒÂ¢Ã…Â¡Ã‚Â  Trap Room</Badge>}
+          {isFog     && <Badge variant="fog">ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« Fog Room</Badge>}
+          {isSafe    && <Badge variant="safe">ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Safe Node</Badge>}
+          {isParadox && <Badge variant="paradox">ÃƒÂ¢Ã…Â Ã‹Å“ Paradox</Badge>}
         </div>
         {/* Complexity bar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -362,10 +364,10 @@ function DoorCard({ door, guess, setGuess, onSolve }) {
                       background: isParadox ? 'rgba(0,255,65,0.06)' : isTrap ? 'rgba(239,68,68,0.06)' : isFog ? 'rgba(168,85,247,0.06)' : 'rgba(59,130,246,0.06)',
                       color: isParadox ? '#00ff41' : isTrap ? '#fca5a5' : isFog ? '#c4b5fd' : '#93c5fd',
                       border: `1px solid ${isParadox ? 'rgba(0,255,65,0.15)' : isTrap ? 'rgba(239,68,68,0.15)' : isFog ? 'rgba(168,85,247,0.15)' : 'rgba(59,130,246,0.15)'}` }}>
-          {isParadox && '⊘ CORE ERROR: LOGICAL CONTRADICTION · +20 PTS BONUS'}
-          {isTrap    && '⚠ WARNING: HOSTILE ATMOSPHERE · HIGH DIFFICULTY'}
-          {isFog     && '🌫 COGNITIVE HAZARD: FOG OF WAR ACTIVE'}
-          {isSafe    && '✓ STABLE NODE: SAFE ENTRY RECOMMENDED'}
+          {isParadox && 'ÃƒÂ¢Ã…Â Ã‹Å“ CORE ERROR: LOGICAL CONTRADICTION Ãƒâ€šÃ‚Â· +20 PTS BONUS'}
+          {isTrap    && 'ÃƒÂ¢Ã…Â¡Ã‚Â  WARNING: HOSTILE ATMOSPHERE Ãƒâ€šÃ‚Â· HIGH DIFFICULTY'}
+          {isFog     && 'ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« COGNITIVE HAZARD: FOG OF WAR ACTIVE'}
+          {isSafe    && 'ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ STABLE NODE: SAFE ENTRY RECOMMENDED'}
         </div>
       )}
 
@@ -398,14 +400,14 @@ function DoorCard({ door, guess, setGuess, onSolve }) {
                        '0 4px 20px rgba(99,91,255,0.4)'
           }}
         >
-          Enter →
+          Enter ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢
         </button>
       </div>
     </div>
   );
 }
 
-/* ── Tree Map custom node ────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Tree Map custom node ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, handleTravelTo, user) {
   const roomId = parseInt(nodeDatum.name.replace("Room #", ""));
   const playerCount = heatmap[roomId] || 0;
@@ -453,7 +455,7 @@ function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, han
       <rect x={18} y={-12} width={labelW} height={18} rx={5} fill="rgba(15,23,42,0.9)" stroke="rgba(0,255,255,0.4)" strokeWidth={1} />
       <text className="tree-node-text" x={24} dy={1} fontSize={14} fontWeight="700"
             style={{ fill: '#ffffff', stroke: 'none', fontFamily: 'JetBrains Mono' }}>
-        {nodeName}{playerCount > 0 && ` 👥${playerCount}`}
+        {nodeName}{playerCount > 0 && ` ÃƒÂ°Ã…Â¸Ã¢â‚¬ËœÃ‚Â¥${playerCount}`}
       </text>
       {creator && (
         <>
@@ -464,7 +466,7 @@ function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, han
           <text x={23} dy={21} fontSize={9}
                 style={{ fill: isParadox ? '#00ff41' : sentiment === 'dark' ? '#f87171' : complexity < 40 ? '#c084fc' : '#94a3b8', fontFamily: 'JetBrains Mono', paintOrder: 'stroke' }}
                 stroke="#030712" strokeWidth={0.3}>
-            {isParadox ? `⊘ ${creator}` : sentiment === 'dark' ? `⚠ ${creator}` : complexity < 40 ? `🌫 ${creator}` : isLeaf ? `⚡ ${creator}` : `· ${creator}`}
+            {isParadox ? `ÃƒÂ¢Ã…Â Ã‹Å“ ${creator}` : sentiment === 'dark' ? `ÃƒÂ¢Ã…Â¡Ã‚Â  ${creator}` : complexity < 40 ? `ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« ${creator}` : isLeaf ? `ÃƒÂ¢Ã…Â¡Ã‚Â¡ ${creator}` : `Ãƒâ€šÃ‚Â· ${creator}`}
           </text>
         </>
       )}
@@ -472,14 +474,14 @@ function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, han
   );
 }
 
-/* ── Main App ────────────────────────────────────────────────────── */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Main App ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 function About({ onBack, isExiting }) {
   return (
     <div className={`about-page-container ${isExiting ? 'exit' : ''} relative pb-24`}>
       <div className="max-w-[800px] mx-auto px-6 py-20 text-slate-300 font-mono relative z-10">
         
         <button onClick={onBack} className="badge hover:bg-white/10 transition-colors mb-12 flex items-center gap-2" style={{ cursor: 'pointer', background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white', border: '1px solid', padding: '8px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>
-          ← RETURN TO THE MAZE
+          ÃƒÂ¢Ã¢â‚¬Â   RETURN TO THE MAZE
         </button>
 
         <h1 className="text-5xl font-display text-white mb-4 tracking-tight">About The Infinite Escape Room</h1>
@@ -496,20 +498,20 @@ function About({ onBack, isExiting }) {
           <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">2. The Mechanics</h2>
           <div className="flex flex-col gap-6">
             <div>
-              <h3 className="text-white mb-2">✦ Solving Doors</h3>
+              <h3 className="text-white mb-2">ÃƒÂ¢Ã…â€œÃ‚Â¦ Solving Doors</h3>
               <p className="text-sm leading-relaxed text-slate-400">Read the riddle, type your answer. Our AI checker understands synonyms and concepts, so you don't need the exact word if the meaning is right.</p>
             </div>
             <div>
-              <h3 className="text-white mb-2">✦ Forging Doors</h3>
+              <h3 className="text-white mb-2">ÃƒÂ¢Ã…â€œÃ‚Â¦ Forging Doors</h3>
               <p className="text-sm leading-relaxed text-slate-400">At a dead end? Forge a new door! Write a custom riddle or let the AI generate one. If players fail to solve your door, you earn passive points.</p>
             </div>
             <div>
-              <h3 className="text-[#a855f7] mb-2">🌫 Fog of War & Complexity</h3>
+              <h3 className="text-[#a855f7] mb-2">ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« Fog of War & Complexity</h3>
               <p className="text-sm leading-relaxed text-slate-400">The AI calculates a Complexity Score (0-100) for every door based on the riddle's difficulty. Rooms with a score below 40 are covered in a cognitive "Fog of War" that obscures the UI.</p>
             </div>
             <div>
-              <h3 className="text-[#ef4444] mb-2">⚠ Warnings & Themes</h3>
-              <p className="text-sm leading-relaxed text-slate-400">The AI analyzes the sentiment of the riddle (Light, Dark, or Neutral). Dark riddles trigger trap warnings. The system also learns from failed players—if many players guess the same wrong answer (a trap), the AI will warn you about it when you enter the room!</p>
+              <h3 className="text-[#ef4444] mb-2">ÃƒÂ¢Ã…Â¡Ã‚Â  Warnings & Themes</h3>
+              <p className="text-sm leading-relaxed text-slate-400">The AI analyzes the sentiment of the riddle (Light, Dark, or Neutral). Dark riddles trigger trap warnings. The system also learns from failed playersÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âif many players guess the same wrong answer (a trap), the AI will warn you about it when you enter the room!</p>
             </div>
           </div>
         </section>
@@ -517,7 +519,7 @@ function About({ onBack, isExiting }) {
         <section className="mb-16">
           <h2 className="text-2xl text-white font-display mb-6 border-b border-white/10 pb-4">3. Paradoxes</h2>
           <p className="leading-relaxed mb-4 text-sm text-slate-400">
-            A Paradox is a room containing a logical contradiction that breaks the simulation (e.g., Door #19: "I am a statement that is entirely false. Everything I say is a lie..."). The AI detects these automatically. Solving a paradox grants a massive +20 points bonus, but beware—their solutions are often abstract!
+            A Paradox is a room containing a logical contradiction that breaks the simulation (e.g., Door #19: "I am a statement that is entirely false. Everything I say is a lie..."). The AI detects these automatically. Solving a paradox grants a massive +20 points bonus, but bewareÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âtheir solutions are often abstract!
           </p>
         </section>
 
@@ -537,9 +539,9 @@ function About({ onBack, isExiting }) {
 
         <section className="mb-16 border border-[#00ff41]/20 bg-[#00ff41]/5 p-6 rounded-xl relative overflow-hidden shadow-[0_0_20px_rgba(0,255,65,0.05)]">
           <div className="absolute top-0 right-0 p-4 opacity-10">
-            <span className="text-8xl">⊘</span>
+            <span className="text-8xl">ÃƒÂ¢Ã…Â Ã‹Å“</span>
           </div>
-          <h2 className="text-2xl text-[#00ff41] font-display mb-4">✦ The Ultimate Reward</h2>
+          <h2 className="text-2xl text-[#00ff41] font-display mb-4">ÃƒÂ¢Ã…â€œÃ‚Â¦ The Ultimate Reward</h2>
           <p className="leading-relaxed text-sm text-[#00ff41]/80 relative z-10">
             Remember, the maze hides dark secrets and broken logic. If you manage to find and solve a <strong>Paradox Room</strong>, the system will reward you with a massive <strong>+20 POINTS BONUS</strong>! Keep an eye out for contradictions and good luck outsmarting the machine.
           </p>
@@ -776,11 +778,10 @@ function App() {
           setMlWarning(null);
           setFailureCount(0);
           setShowEchoes(false);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
           if (!res.data.points_awarded) {
-            setSuccess('✓ Correct! (Room already solved — no bonus this time)');
+            setSuccess('ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Correct! (Room already solved ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â no bonus this time)');
           } else {
-            setSuccess(`✓ Correct! +${pts} pts`);
+            setSuccess(`ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Correct! +${pts} pts`);
           }
         };
 
@@ -827,9 +828,9 @@ function App() {
         const updated = { ...user, points: (user.points || 0) + pts_earned };
         setUser(updated);
         localStorage.setItem('escape_room_user', JSON.stringify(updated));
-        setSuccess(`✓ New door forged! +${pts_earned} pts`);
+        setSuccess(`ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ New door forged! +${pts_earned} pts`);
       } else {
-        setSuccess('✓ AI door summoned! (No points awarded)');
+        setSuccess('ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ AI door summoned! (No points awarded)');
       }
       
       fetchRoomData(currentRoomId);
@@ -897,14 +898,14 @@ function App() {
     localStorage.removeItem('escape_room_user');
   };
 
-  /* ── Auth Gate ── */
+  /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Auth Gate ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
   if (!user) return <AuthScreen onLogin={(u) => {
     setUser(u);
     setCurrentRoomId(u.current_room_id || 1);
     localStorage.setItem('escape_room_user', JSON.stringify(u));
   }} />;
 
-  /* ── Loading ── */
+  /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Loading ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
   if (loading) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
       <div style={{
@@ -948,8 +949,8 @@ function App() {
       <div className="ml-badge-stack hidden lg:flex fixed top-20 right-6 z-50 flex-col gap-2 items-end pointer-events-none">
         {[
           { show: true, label: `VIBE: ${sentiment.toUpperCase()}`, color: sentiment === 'dark' ? '#ef4444' : sentiment === 'light' ? '#3b82f6' : '#475569' },
-          { show: true, label: `COMPLEXITY: ${Math.round(roomData.complexity_score)}${isFog ? ' 🌫' : ''}`, color: isFog ? '#a855f7' : '#475569' },
-          { show: false, label: '⊘ PARADOX', color: '#00ff41' },
+          { show: true, label: `COMPLEXITY: ${Math.round(roomData.complexity_score)}${isFog ? ' ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â«' : ''}`, color: isFog ? '#a855f7' : '#475569' },
+          { show: false, label: 'ÃƒÂ¢Ã…Â Ã‹Å“ PARADOX', color: '#00ff41' },
         ].filter(b => b.show).map(b => (
           <div key={b.label} style={{
             fontSize: 10, padding: '4px 12px', borderRadius: 100,
@@ -968,9 +969,9 @@ function App() {
         {mlWarning && (
           <div className="relative bg-black/80 backdrop-blur-md px-5 py-4 rounded-xl border border-red-500/40 flex items-center gap-4 shadow-[0_0_20px_rgba(239,68,68,0.2)] animate-pulse pr-10">
             <button onClick={() => setMlWarning(null)} className="absolute top-2 right-2 text-red-500/50 hover:text-red-400">
-              ✕
+              ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¢
             </button>
-            <span className="text-red-400 text-xl">⚠</span>
+            <span className="text-red-400 text-xl">ÃƒÂ¢Ã…Â¡Ã‚Â </span>
             <div className="flex flex-col">
               <span className="text-[10px] font-mono text-red-400 uppercase tracking-widest mb-1">Behavioral ML Warning</span>
               <span className="text-sm font-semibold">{mlWarning}</span>
@@ -979,15 +980,14 @@ function App() {
         )}
         {failureCount > 5 && (
           <div className="bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-[#fbbf24]/30 shadow-[0_0_15px_rgba(251,191,36,0.1)]">
-            <span className="text-yellow-400">⚰</span>
+            <span className="text-yellow-400">ÃƒÂ¢Ã…Â¡Ã‚Â°</span>
             <span className="text-xs font-mono text-slate-300">Graveyard: {failureCount} failures here</span>
           </div>
         )}
       </div>
 
-      {/* ── Section 1: Room Hero (Features Section) ── */}
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Section 1: Room Hero (Features Section) ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
       <section className="relative py-24 lg:py-32 overflow-hidden border-b border-white/5">
-        <div className="wind-overlay" />
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="relative mb-12">
             <div className="grid lg:grid-cols-12 gap-8 items-end">
@@ -1000,15 +1000,15 @@ function App() {
                   Room <span className="text-white/40">#{roomData.id}.</span>
                 </h2>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 24 }}>
-                  {isParadox && <Badge variant="paradox">⊘ Paradox Room</Badge>}
-                  {sentiment === 'dark' && !isParadox && <Badge variant="trap">⚠ Trap Vibe</Badge>}
-                  {sentiment === 'light' && !isParadox && <Badge variant="safe">✓ Safe Vibe</Badge>}
-                  {isFog && !isParadox && <Badge variant="fog">🌫 Fog Active</Badge>}
-                  {isDeadEnd && <span className="badge" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}>⚡ Dead End</span>}
+                  {isParadox && <Badge variant="paradox">ÃƒÂ¢Ã…Â Ã‹Å“ Paradox Room</Badge>}
+                  {sentiment === 'dark' && !isParadox && <Badge variant="trap">ÃƒÂ¢Ã…Â¡Ã‚Â  Trap Vibe</Badge>}
+                  {sentiment === 'light' && !isParadox && <Badge variant="safe">ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Safe Vibe</Badge>}
+                  {isFog && !isParadox && <Badge variant="fog">ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« Fog Active</Badge>}
+                  {isDeadEnd && <span className="badge" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}>ÃƒÂ¢Ã…Â¡Ã‚Â¡ Dead End</span>}
                   
                   {roomData.parent_room_id && (
                     <button onClick={() => setCurrentRoomId(roomData.parent_room_id)} className="badge hover:bg-white/10 transition-colors" style={{ cursor: 'pointer', background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white', border: '1px solid', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: 600, letterSpacing: '0.05em' }}>
-                      ← Go Back to Room #{roomData.parent_room_id}
+                      ÃƒÂ¢Ã¢â‚¬Â Ã‚Â Go Back to Room #{roomData.parent_room_id}
                     </button>
                   )}
                 </div>
@@ -1026,14 +1026,14 @@ function App() {
               <div className="relative flex-1 p-8 lg:p-12 bg-black">
                 <div className="relative z-10 flex flex-col h-full justify-center">
                   <span className="font-mono text-sm text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                    🔑 The riddle you solved to enter
+                    ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ¢â‚¬Ëœ The riddle you solved to enter
                   </span>
                   <h3 className="text-3xl lg:text-4xl font-display mt-6 mb-6 leading-relaxed italic text-white/90">
                     "{roomData.question}"
                   </h3>
                   {isParadox && (
                     <div className="mt-4 p-3 rounded-lg text-xs font-mono text-[#00ff41] bg-[#00ff41]/5 border border-[#00ff41]/20 inline-block w-fit">
-                      [CRITICAL ERROR: Logical Contradiction Detected — This room is unstable]
+                      [CRITICAL ERROR: Logical Contradiction Detected ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â This room is unstable]
                     </div>
                   )}
                 </div>
@@ -1053,7 +1053,7 @@ function App() {
         </div>
       </section>
 
-      {/* ── Section 2: Metrics (Stats Section) ── */}
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Section 2: Metrics (Stats Section) ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
       <section className="relative py-24 lg:py-32 overflow-hidden border-b border-white/5">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
           <div className="mb-20">
@@ -1096,67 +1096,7 @@ function App() {
         </div>
       </section>
 
-      {/* ── Section 4: Live Map & Leaderboard ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-4 gap-12">
-          
-          {/* Left Column: Leaderboard & Chat */}
-                    {/* Right Column: Interactive Map */}
-          <div className="lg:col-span-4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-3xl font-display text-white">Global Maze Structure</h3>
-                <p className="text-slate-500 text-sm font-mono mt-1">Live tracking of all active agents</p>
-              </div>
-              <div className="flex gap-4 flex-wrap bg-white/5 p-2 rounded-xl border border-white/10">
-                {[
-                  { color: '#ffffff', label: 'You are here' },
-                  { color: '#635bff', label: 'Unsolved' },
-                  { color: '#ef4444', label: 'Trap' },
-                  { color: '#a855f7', label: 'Fog' },
-                ].map(l => (
-                  <div key={l.label} className="flex items-center gap-2 text-xs font-mono text-white">
-                    <div className="w-2 h-2 rounded-full" style={{ background: l.color, boxShadow: `0 0 8px ${l.color}` }} />
-                    {l.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 overflow-hidden relative h-[800px]"
-                 style={{ background: 'radial-gradient(ellipse at bottom, #062233 0%, #020617 80%)' }}>
-              <div className="river-flow layer2"></div>
-              <div className="river-flow"></div>
-              <Orb color="radial-gradient(rgba(0,255,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
-              
-              <div className="absolute inset-0 z-10">
-                {treeData.length > 0 ? (
-                  <Tree
-                    data={treeData}
-                    orientation="vertical"
-                    pathFunc="diagonal"
-                    translate={{ x: Math.min(window.innerWidth * 0.75, 1000) / 2, y: 50 }}
-                    nodeSize={{ x: 260, y: 160 }}
-                    renderCustomNodeElement={(props) => renderCustomNode(props, heatmap, currentRoomId, handleTravelTo, user)}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-slate-500 font-mono">Loading coordinate data...</div>
-                )}
-              </div>
-            </div>
-          </div>
-
-        </div>
-        
-        {/* Footer Link */}
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-24 relative z-10">
-          <button onClick={handleOpenAbout} className="text-sm font-mono text-cyan-400 font-bold border border-cyan-500/30 px-8 py-4 rounded-full bg-cyan-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-cyan-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
-            ✦ About the Maze ✦
-          </button>
-        </div>
-      </section>
-
-      {/* ── Section 3: Action & Navigation (Infrastructure Section) ── */}
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Section 3: Action & Navigation (Infrastructure Section) ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
       <section className="relative py-24 lg:py-32 overflow-hidden border-b border-white/5">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
           <div className="mb-20">
@@ -1183,18 +1123,18 @@ function App() {
               <div className="relative z-10 grid lg:grid-cols-2 gap-12">
                 <div className="flex flex-col">
                   <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-6xl lg:text-7xl font-display leading-none text-white">⚒ Forge</span>
+                    <span className="text-6xl lg:text-7xl font-display leading-none text-white">ÃƒÂ¢Ã…Â¡Ã¢â‚¬â„¢ Forge</span>
                     <span className="text-xl text-slate-400">a new door</span>
                   </div>
                   <p className="text-slate-400 max-w-md mb-8">
                     {isDeadEnd
-                      ? "You've reached a dead end. Leave your legacy — build a riddle for future explorers."
+                      ? "You've reached a dead end. Leave your legacy ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â build a riddle for future explorers."
                       : "Can't solve the existing riddles? Forge a brand new branching path."}
                   </p>
 
                   {roomData.doors.filter(d => d.creator === user?.username).length >= 2 ? (
                     <div className="flex flex-col items-center justify-center p-8 text-center border border-red-500/30 bg-red-500/5 rounded-xl">
-                      <span className="text-4xl mb-4">⛔</span>
+                      <span className="text-4xl mb-4">ÃƒÂ¢Ã¢â‚¬ÂºÃ¢â‚¬Â</span>
                       <span className="text-xl font-display text-white mb-2">Personal Capacity Reached</span>
                       <span className="text-slate-400">You have already forged 2 doors from this room. Give others a chance to branch out!</span>
                     </div>
@@ -1233,7 +1173,7 @@ function App() {
                     </div>
                   </div>
                   <button type="button" onClick={handleGenerateRiddle} disabled={loading || isGenerating} className="btn-secondary w-full mt-2 py-2 text-sm font-display tracking-wide border border-purple-500/50 text-purple-400 hover:bg-purple-500/10">
-                    {isGenerating ? '✨ Generating...' : '✨ Auto-Generate with AI'}
+                    {isGenerating ? 'ÃƒÂ¢Ã…â€œÃ‚Â¨ Generating...' : 'ÃƒÂ¢Ã…â€œÃ‚Â¨ Auto-Generate with AI'}
                   </button>
                   <button type="submit" disabled={loading} className="btn-primary w-full mt-2 py-3 text-lg font-display tracking-wide">
                     {loading ? 'Forging...' : 'Build Door'}
@@ -1242,18 +1182,166 @@ function App() {
                 )}
                 </div>
 
-                <div className="flex flex-col pt-8 lg:pt-0 lg:pl-12 lg:border-l border-white/10">
+                
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {isDeadEnd ? (
+                <div className="md:col-span-2 lg:col-span-3 p-8 border border-[#fbbf24]/30 bg-[#fbbf24]/5 flex flex-col justify-center items-center h-full text-center">
+                  <span className="text-6xl mb-4">ÃƒÂ¢Ã…Â¡Ã‚Â¡</span>
+                  <span className="text-2xl font-display text-[#fbbf24]">Dead End</span>
+                  <span className="text-slate-400 mt-2">No doors ahead. You must forge a new one to continue.</span>
+                </div>
+              ) : (
+                roomData.doors.map(door => {
+                  const isParadox = false; // Hidden to prevent spoilers
+                  const isTrap    = door.sentiment === 'dark' && !door.is_paradox;
+                  const isSafe    = door.sentiment === 'light' && !door.is_paradox && door.complexity_score >= 40;
+                  const isFog     = door.complexity_score < 40 && !door.is_paradox;
+                  
+                  return (
+                    <div key={door.id} className={`p-6 border bg-white/[0.02] flex flex-col gap-4 transition-all hover:bg-white/[0.04] ${isTrap ? 'border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.1)]' : isFog ? 'border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)]' : isSafe ? 'border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]' : isParadox ? 'border-green-500/30 shadow-[0_0_15px_rgba(0,255,65,0.1)]' : 'border-white/10 hover:border-white/30'}`}>
+                      <div>
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-sm font-mono text-slate-500 block">Door #{door.id}</span>
+                        </div>
+                        {(isTrap || isFog || isSafe || isParadox) && (
+                          <div className={`text-[10px] font-mono px-3 py-2 rounded mb-4 border ${isParadox ? 'bg-green-500/10 text-green-400 border-green-500/20' : isTrap ? 'bg-red-500/10 text-red-400 border-red-500/20' : isFog ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
+                            {isParadox && 'ÃƒÂ¢Ã…Â Ã‹Å“ CORE ERROR: LOGICAL CONTRADICTION Ãƒâ€šÃ‚Â· +20 PTS BONUS'}
+                            {isTrap    && 'ÃƒÂ¢Ã…Â¡Ã‚Â  WARNING: HOSTILE ATMOSPHERE Ãƒâ€šÃ‚Â· HIGH DIFFICULTY'}
+                            {isFog     && 'ÃƒÂ°Ã…Â¸Ã…â€™Ã‚Â« COGNITIVE HAZARD: FOG OF WAR ACTIVE'}
+                            {isSafe    && 'ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ STABLE NODE: SAFE ENTRY RECOMMENDED'}
+                          </div>
+                        )}
+                        <p className={`text-base leading-relaxed ${isParadox ? 'font-mono text-green-400 glitch-effect' : 'text-slate-300'}`}>
+                          "{door.question}"
+                        </p>
+                      </div>
+                      
+                      <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleSolve(door.id, e.target.elements.guess.value); }} className="flex gap-2">
+                        <input
+                          type="text"
+                          name="guess"
+                          autoComplete="off"
+                          required
+                          placeholder={isTrap ? 'Tread carefully...' : isFog ? 'Analyze carefully...' : 'Your answer...'}
+                          className="flex-1 bg-black border border-white/10 rounded-md p-2 text-sm text-white focus:outline-none focus:border-white/30"
+                          style={{ borderColor: isParadox ? 'rgba(0,255,65,0.3)' : isTrap ? 'rgba(239,68,68,0.3)' : isFog ? 'rgba(168,85,247,0.3)' : isSafe ? 'rgba(59,130,246,0.3)' : undefined }}
+                        />
+                        <button type="submit" className="btn-primary py-2 px-4 text-sm font-mono">Unlock</button>
+                      </form>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Paradox Animation Overlay ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+      {showParadoxAnim && (
+        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/95 backdrop-blur-3xl pointer-events-none">
+          <div className="text-[#00ff41] font-mono text-center px-4">
+            <h1 className="text-4xl md:text-7xl font-bold mb-6 glitch-effect animate-pulse tracking-widest uppercase">Paradox Resolved</h1>
+            <h2 className="text-xl md:text-2xl tracking-widest opacity-80 uppercase border-y border-[#00ff41]/30 py-4 inline-block">Logical Anomaly Stabilized</h2>
+            <div className="mt-12 text-xs md:text-sm opacity-60 animate-pulse tracking-widest">Initializing spatial reconfiguration...</div>
+          </div>
+        </div>
+      )}
+
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Top Nav / Status Bar ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center mix-blend-difference pointer-events-none w-full">
+        <div className="font-display font-bold text-xl tracking-widest text-white uppercase flex items-center gap-3 shrink-0">
+          <span className="opacity-50 pointer-events-auto cursor-pointer" onClick={() => handleTravelTo(1)}>Escape</span>
+          <span className="opacity-100">Room</span>
+        </div>
+
+        {/* Live pulse ticker */}
+        <div className="flex-1 overflow-hidden relative mx-8 pointer-events-auto hidden md:block">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff] animate-pulse" />
+              <span className="text-[10px] text-white uppercase font-mono tracking-widest">LIVE</span>
+            </div>
+            <div className="overflow-hidden flex-1">
+              <div className="animate-marquee flex gap-16 whitespace-nowrap">
+                {[...activities, ...activities].map((act, i) => (
+                  <span key={i} className="text-xs text-slate-400 font-mono">
+                    {act.message}
+                    <span className="text-slate-600 ml-3">
+                      [{new Date(act.created_at + "Z").toLocaleTimeString()}]
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Global Error Banner */}
+        {error && (
+          <div className="pointer-events-auto absolute top-20 left-1/2 -translate-x-1/2 bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-3 rounded-lg flex items-center gap-3 backdrop-blur-md z-50 animate-pulse cursor-pointer shadow-[0_0_15px_rgba(239,68,68,0.2)]" onClick={() => setError('')}>
+            <span>ÃƒÂ¢Ã…Â¡Ã‚Â </span> {error}
+          </div>
+        )}
+
+        <div className="flex items-center gap-6 pointer-events-auto">
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
+            >
+              Log Out
+            </button>
+          )}
+        </div>
+      </nav>
+
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Section 4: Live Map & Leaderboard ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+      <section className="relative py-24 lg:py-32 overflow-hidden bg-black text-white">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
+          
+          {/* Left Column: Leaderboard & Chat */}
+          <div className="lg:col-span-1 flex flex-col gap-12">
+            <div>
+              <h3 className="text-3xl font-display text-white mb-6">Leaderboard</h3>
+              <div className="flex flex-col gap-3">
+                {leaderboard.slice(0, 10).map((u, i) => (
+                  <div key={i} className="flex items-center justify-between p-3 border border-white/10 bg-white/[0.02] rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <span className="text-slate-500 font-mono text-xs">{(i+1).toString().padStart(2, '0')}</span>
+                      <span className={`font-mono text-sm ${u.username === user.username ? 'text-white font-bold' : 'text-slate-300'}`}>{u.username}</span>
+                    </div>
+                    <span className="text-white font-display text-lg">{u.points}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Chat Box */}
+          <div className="flex flex-col gap-12">
+            <div>
+              <div className="flex flex-col pt-8 lg:pt-0 lg:pl-12 lg:border-l border-white/10">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-display text-white">Echoes (Chat)</h3>
-                    <div className="flex items-center gap-3">
-                      <button onClick={() => setShowEchoes(!showEchoes)} className="text-[10px] uppercase font-bold text-cyan-400 border border-cyan-500/30 px-2 py-1 rounded hover:bg-cyan-500/10">
-                        {showEchoes ? 'Hide' : 'Reveal'}
-                      </button>
-                      <span className="text-xs bg-white/10 px-2 py-1 rounded-full">{roomData.hints?.length || 0}</span>
-                    </div>
+                    {wrongGuessCount > 0 && (
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => setShowEchoes(!showEchoes)} className="text-[10px] uppercase font-bold text-purple-400 border border-purple-500/30 px-2 py-1 rounded hover:bg-purple-500/10">
+                          {showEchoes ? 'Hide' : 'Reveal'}
+                        </button>
+                        <span className="text-xs bg-white/10 px-2 py-1 rounded-full">{roomData.hints?.length || 0}</span>
+                      </div>
+                    )}
                   </div>
                   
-                  {showEchoes ? (
+                  {wrongGuessCount === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-[300px] border border-white/5 bg-white/[0.02] rounded-lg mb-4 p-4 text-center">
+                      <p className="text-sm text-slate-400 font-mono italic">Echoes are hidden. You must attempt to solve a riddle before viewing hints.</p>
+                    </div>
+                  ) : showEchoes ? (
                     <div className="overflow-y-auto pr-2 flex flex-col gap-3 mb-4 h-[300px]">
                       {!roomData.hints?.length ? (
                         <div className="text-slate-500 font-mono text-xs italic">No echoes in this room yet.</div>
@@ -1310,153 +1398,66 @@ function App() {
                 </div>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {isDeadEnd ? (
-                <div className="md:col-span-2 lg:col-span-3 p-8 border border-[#fbbf24]/30 bg-[#fbbf24]/5 flex flex-col justify-center items-center h-full text-center">
-                  <span className="text-6xl mb-4">⚡</span>
-                  <span className="text-2xl font-display text-[#fbbf24]">Dead End</span>
-                  <span className="text-slate-400 mt-2">No doors ahead. You must forge a new one to continue.</span>
-                </div>
-              ) : (
-                roomData.doors.map(door => {
-                  const isParadox = false; // Hidden to prevent spoilers
-                  const isTrap    = door.sentiment === 'dark' && !door.is_paradox;
-                  const isSafe    = door.sentiment === 'light' && !door.is_paradox && door.complexity_score >= 40;
-                  const isFog     = door.complexity_score < 40 && !door.is_paradox;
-                  
-                  return (
-                    <div key={door.id} className={`p-6 border bg-white/[0.02] flex flex-col gap-4 transition-all hover:bg-white/[0.04] ${isTrap ? 'border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.1)]' : isFog ? 'border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)]' : isSafe ? 'border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.1)]' : isParadox ? 'border-green-500/30 shadow-[0_0_15px_rgba(0,255,65,0.1)]' : 'border-white/10 hover:border-white/30'}`}>
-                      <div>
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-sm font-mono text-slate-500 block">Door #{door.id}</span>
-                        </div>
-                        {(isTrap || isFog || isSafe || isParadox) && (
-                          <div className={`text-[10px] font-mono px-3 py-2 rounded mb-4 border ${isParadox ? 'bg-green-500/10 text-green-400 border-green-500/20' : isTrap ? 'bg-red-500/10 text-red-400 border-red-500/20' : isFog ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
-                            {isParadox && '⊘ CORE ERROR: LOGICAL CONTRADICTION · +20 PTS BONUS'}
-                            {isTrap    && '⚠ WARNING: HOSTILE ATMOSPHERE · HIGH DIFFICULTY'}
-                            {isFog     && '🌫 COGNITIVE HAZARD: FOG OF WAR ACTIVE'}
-                            {isSafe    && '✓ STABLE NODE: SAFE ENTRY RECOMMENDED'}
-                          </div>
-                        )}
-                        <p className={`text-base leading-relaxed ${isParadox ? 'font-mono text-green-400 glitch-effect' : 'text-slate-300'}`}>
-                          "{door.question}"
-                        </p>
-                      </div>
-                      
-                      <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleSolve(door.id, e.target.elements.guess.value); }} className="flex gap-2">
-                        <input
-                          type="text"
-                          name="guess"
-                          autoComplete="off"
-                          required
-                          placeholder={isTrap ? 'Tread carefully...' : isFog ? 'Analyze carefully...' : 'Your answer...'}
-                          className="flex-1 bg-black border border-white/10 rounded-md p-2 text-sm text-white focus:outline-none focus:border-white/30"
-                          style={{ borderColor: isParadox ? 'rgba(0,255,65,0.3)' : isTrap ? 'rgba(239,68,68,0.3)' : isFog ? 'rgba(168,85,247,0.3)' : isSafe ? 'rgba(59,130,246,0.3)' : undefined }}
-                        />
-                        <button type="submit" className="btn-primary py-2 px-4 text-sm font-mono">Unlock</button>
-                      </form>
-                    </div>
-                  );
-                })
-              )}
-            </div>
           </div>
         </div>
-      </section>
 
-      {/* ── Paradox Animation Overlay ── */}
-      {showParadoxAnim && (
-        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/95 backdrop-blur-3xl pointer-events-none">
-          <div className="text-[#00ff41] font-mono text-center px-4">
-            <h1 className="text-4xl md:text-7xl font-bold mb-6 glitch-effect animate-pulse tracking-widest uppercase">Paradox Resolved</h1>
-            <h2 className="text-xl md:text-2xl tracking-widest opacity-80 uppercase border-y border-[#00ff41]/30 py-4 inline-block">Logical Anomaly Stabilized</h2>
-            <div className="mt-12 text-xs md:text-sm opacity-60 animate-pulse tracking-widest">Initializing spatial reconfiguration...</div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Top Nav / Status Bar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center mix-blend-difference pointer-events-none w-full">
-        <div className="font-display font-bold text-xl tracking-widest text-white uppercase flex items-center gap-3 shrink-0">
-          <span className="opacity-50 pointer-events-auto cursor-pointer" onClick={() => handleTravelTo(1)}>Escape</span>
-          <span className="opacity-100">Room</span>
-        </div>
-
-        {/* Live pulse ticker */}
-        <div className="flex-1 overflow-hidden relative mx-8 pointer-events-auto hidden md:block">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff] animate-pulse" />
-              <span className="text-[10px] text-white uppercase font-mono tracking-widest">LIVE</span>
-            </div>
-            <div className="overflow-hidden flex-1">
-              <div className="animate-marquee flex gap-16 whitespace-nowrap">
-                {[...activities, ...activities].map((act, i) => (
-                  <span key={i} className="text-xs text-slate-400 font-mono">
-                    {act.message}
-                    <span className="text-slate-600 ml-3">
-                      [{new Date(act.created_at + "Z").toLocaleTimeString()}]
-                    </span>
-                  </span>
-                ))}
+        {/* ── Section 5: Map ── */}
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-12 mt-12 relative z-10">
+          <div className="w-full">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-3xl font-display text-white">Global Maze Structure</h3>
+                <p className="text-slate-500 text-sm font-mono mt-1">Live tracking of all active agents</p>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Global Error Banner */}
-        {error && (
-          <div className="pointer-events-auto absolute top-20 left-1/2 -translate-x-1/2 bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-3 rounded-lg flex items-center gap-3 backdrop-blur-md z-50 animate-pulse cursor-pointer shadow-[0_0_15px_rgba(239,68,68,0.2)]" onClick={() => setError('')}>
-            <span>⚠</span> {error}
-          </div>
-        )}
-
-        <div className="flex items-center gap-6 pointer-events-auto">
-          {user && (
-            <button
-              onClick={handleLogout}
-              className="text-xs uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
-            >
-              Log Out
-            </button>
-          )}
-        </div>
-      </nav>
-
-      
-      {/* ── Section 5: Chat & Leaderboard ── */}
-      <section className="relative py-24 lg:py-32 overflow-hidden border-t border-white/5 bg-black">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-<div className="w-full max-w-5xl mx-auto grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-3xl font-display text-white mb-6">Leaderboard</h3>
-              <div className="flex flex-col gap-3">
-                {leaderboard.slice(0, 10).map((u, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 border border-white/10 bg-white/[0.02] rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <span className="text-slate-500 font-mono text-xs">{(i+1).toString().padStart(2, '0')}</span>
-                      <span className={`font-mono text-sm ${u.username === user.username ? 'text-white font-bold' : 'text-slate-300'}`}>{u.username}</span>
-                    </div>
-                    <span className="text-white font-display text-lg">{u.points}</span>
+              <div className="flex gap-4 flex-wrap bg-white/5 p-2 rounded-xl border border-white/10">
+                {[
+                  { color: '#ffffff', label: 'You are here' },
+                  { color: '#635bff', label: 'Unsolved' },
+                  { color: '#ef4444', label: 'Trap' },
+                  { color: '#a855f7', label: 'Fog' },
+                ].map(l => (
+                  <div key={l.label} className="flex items-center gap-2 text-xs font-mono text-white">
+                    <div className="w-2 h-2 rounded-full" style={{ background: l.color, boxShadow: `0 0 8px ${l.color}` }} />
+                    {l.label}
                   </div>
                 ))}
               </div>
             </div>
+
+            <div className="rounded-2xl border border-white/10 overflow-hidden relative h-[800px]"
+                 style={{ background: 'radial-gradient(ellipse at bottom, #062233 0%, #020617 80%)' }}>
+              <Orb color="radial-gradient(rgba(0,255,255,0.15), transparent)" size="800px" x="50%" y="80%" opacity={0.3} />
+              
+              <div className="absolute inset-0 z-10">
+                {treeData.length > 0 ? (
+                  <Tree
+                    data={treeData}
+                    orientation="vertical"
+                    pathFunc="diagonal"
+                    translate={{ x: Math.min(window.innerWidth * 0.75, 1000) / 2, y: 50 }}
+                    nodeSize={{ x: 260, y: 160 }}
+                    renderCustomNodeElement={(props) => renderCustomNode(props, heatmap, currentRoomId, handleTravelTo, user)}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-slate-500 font-mono">Loading coordinate data...</div>
+                )}
+              </div>
+            </div>
           </div>
-          
 
         </div>
+        
+        {/* Footer Link */}
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-white/5 flex justify-center pb-24 relative z-10">
+          <button onClick={handleOpenAbout} className="text-sm font-mono text-purple-400 font-bold border border-purple-500/30 px-8 py-4 rounded-full bg-purple-500/10 shadow-[0_0_20px_rgba(6,182,212,0.2)] hover:bg-purple-500/20 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all uppercase tracking-[0.2em]">
+            ÃƒÂ¢Ã…â€œÃ‚Â¦ About the Maze ÃƒÂ¢Ã…â€œÃ‚Â¦
+          </button>
+        </div>
       </section>
-      <div className="wind-overlay" />
-      <div className="river-flow layer2" />
-      <div className="river-flow layer1" />
+
       {showAbout && <About onBack={handleCloseAbout} isExiting={aboutExiting} />}
       
       {/* Global Click Effects */}
-      {stars.map(s => (
-        <div key={s.id} className="star-particle" style={{ left: s.x, top: s.y, '--dx': s.dx + 'px', '--dy': s.dy + 'px' }} />
-      ))}
       {ripples.map(r => (
         <div key={r.id} className="water-ripple" style={{ left: r.x, top: r.y }} />
       ))}
@@ -1468,3 +1469,8 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
