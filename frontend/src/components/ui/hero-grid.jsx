@@ -1,11 +1,7 @@
 export function HeroGrid() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Dynamic 3D Grid */}
-      <div className="absolute inset-x-0 bottom-0 h-[70vh] cyber-grid-container">
-        <div className="cyber-grid"></div>
-      </div>
-      
+
       {/* Floating Orbs / Particles */}
       {[...Array(6)].map((_, i) => (
         <div key={`orb-${i}`} className="absolute rounded-full mix-blend-screen"
