@@ -35,17 +35,14 @@ def ai_check_answer(question: str, correct_answer: str, user_guess: str) -> bool
             f'User guessed: "{user_guess}"\n\n'
             f"Evaluate if the user's guess is a valid, logical solution to this riddle. "
             f'You must be forgiving. If the guess is a synonym, a highly related concept (e.g. "watch" instead of "clock"), or functionally solves the riddle just as well as the original answer, accept it. '
-            f'Reply with ONLY "yes" or "no".'
+            f'Return ONLY a valid JSON object with a single boolean key "is_correct". Example: {{"is_correct": true}}'
         )
         response = _gemini_model.generate_content(prompt)
-        reply = response.text.strip().lower()
-        if reply.startswith("yes"):
-            return True
-        elif "yes" in reply and "no" not in reply:
-            return True
-        return False
+        text_ans = response.text.replace('```json', '').replace('```', '').strip()
+        data = json.loads(text_ans)
+        return bool(data.get("is_correct", False))
     except Exception as e:
-        print(f"[Gemini] Error: {e}")
+        print(f"[Gemini Check] Error (possibly Rate Limit): {e}")
         return False
 
 models.Base.metadata.create_all(bind=database.engine)
