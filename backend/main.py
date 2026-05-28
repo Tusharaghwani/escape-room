@@ -725,14 +725,25 @@ def get_room_warnings(room_id: int):
 # --- Riddle Generator (Local Bank, Zero Cost, No Repeats) ---
 
 @app.get("/api/riddles/generate")
-def generate_riddle():
+def generate_riddle(theme: Optional[str] = None):
     """
     Returns a new riddle generated dynamically by Gemini.
     """
     if _gemini_model:
         try:
-            prompt = """Generate a short, unique, and clever riddle for an escape room.
+            if theme == "paradox":
+                prompt = """Generate a short logic loop or paradox puzzle for an escape room (e.g. 'This statement is false', 'I am nobody').
+Return EXACTLY a JSON string like: {"question": "...", "answer": "paradox"} where the answer MUST be literally just the word 'paradox'."""
+            elif theme == "fog":
+                prompt = """Generate an extremely complex, abstract, and poetic riddle for an escape room.
 Return EXACTLY a JSON string like: {"question": "...", "answer": "word1,word2"} where the answer field contains multiple acceptable correct answers separated by commas."""
+            elif theme == "dark":
+                prompt = """Generate a dark, ominous, and slightly scary riddle for a horror-themed escape room.
+Return EXACTLY a JSON string like: {"question": "...", "answer": "word1,word2"} where the answer field contains multiple acceptable correct answers separated by commas."""
+            else:
+                prompt = """Generate a short, unique, and clever riddle for an escape room.
+Return EXACTLY a JSON string like: {"question": "...", "answer": "word1,word2"} where the answer field contains multiple acceptable correct answers separated by commas."""
+                
             response = _gemini_model.generate_content(prompt)
             text_ans = response.text.replace('```json', '').replace('```', '').strip()
             data = json.loads(text_ans)

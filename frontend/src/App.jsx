@@ -852,7 +852,8 @@ function App() {
   const handleGenerateRiddle = async () => {
     setIsGenerating(true);
     try {
-      const res = await axios.get(`${API_URL}/riddles/generate`);
+      const query = themeOverride === 'auto' ? '' : `?theme=${themeOverride}`;
+      const res = await axios.get(`${API_URL}/riddles/generate${query}`);
       if (res.data.question) {
         setNewQuestion(res.data.question);
         setNewAnswer(res.data.answer);
