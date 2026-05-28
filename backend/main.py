@@ -108,7 +108,7 @@ def _detect_anomaly(time_taken: float, wrong_guesses: int, hints_read: int):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
