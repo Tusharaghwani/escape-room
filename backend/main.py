@@ -17,7 +17,7 @@ try:
     _GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
     if _GEMINI_KEY:
         genai.configure(api_key=_GEMINI_KEY)
-        _gemini_model = genai.GenerativeModel("gemini-2.0-flash")
+        _gemini_model = genai.GenerativeModel("gemini-1.5-flash")
     else:
         _gemini_model = None
 except Exception:
@@ -66,8 +66,10 @@ for migration_sql in [
 
 # ── Startup Data Patches: Fix known narrow answers ─────────────────────────
 _answer_patches = [
-    # (room_id, new_answer)  — add watch as synonym for clock riddle
     (79, "clock,watch,timepiece,timer"),
+    (55, "river,water,nose,engine,pantyhose,refrigerator"),
+    (28, "palm,palm tree,hand"),
+    (72, "mirror,reflection"),
 ]
 try:
     with database.engine.connect() as conn:
