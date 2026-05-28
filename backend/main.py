@@ -31,10 +31,10 @@ def ai_check_answer(question: str, correct_answer: str, user_guess: str) -> bool
     try:
         prompt = (
             f'Riddle: "{question}"\n'
-            f'Correct answer: "{correct_answer}"\n'
-            f'User answered: "{user_guess}"\n\n'
-            f'Is the user\'s answer semantically correct or equivalent to the correct answer? '
-            f'Consider synonyms, alternate phrasings, and partial matches. '
+            f'Original intended answer: "{correct_answer}"\n'
+            f'User guessed: "{user_guess}"\n\n'
+            f'Evaluate if the user\\'s guess is a valid, logical solution to this riddle. '
+            f'You must be forgiving. If the guess is a synonym, a highly related concept (e.g. "watch" instead of "clock"), or functionally solves the riddle just as well as the original answer, accept it. '
             f'Reply with ONLY "yes" or "no".'
         )
         response = _gemini_model.generate_content(prompt)
