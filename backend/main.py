@@ -39,7 +39,11 @@ def ai_check_answer(question: str, correct_answer: str, user_guess: str) -> bool
         )
         response = _gemini_model.generate_content(prompt)
         reply = response.text.strip().lower()
-        return reply.startswith("yes")
+        if reply.startswith("yes"):
+            return True
+        elif "yes" in reply and "no" not in reply:
+            return True
+        return False
     except Exception as e:
         print(f"[Gemini] Error: {e}")
         return False
