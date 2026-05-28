@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
@@ -633,3 +633,12 @@ def generate_riddle():
 
     question, answer = random.choice(available)
     return {"question": question, "answer": answer}
+@app.post("/api/upload_db")
+async def upload_db(request: Request):
+    data = await request.body()
+    import os
+    db_url = os.getenv("DATABASE_URL", "sqlite:///./escape_room.db")
+    db_path = db_url.replace("sqlite:///", "")
+    with open(db_path, "wb") as f:
+        f.write(data)
+    return {"message": "Database uploaded successfully"}
