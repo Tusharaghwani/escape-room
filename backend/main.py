@@ -265,6 +265,35 @@ def update_room(room_id: int, data: dict, db: Session = Depends(database.get_db)
     db.refresh(room)
     return {"id": room.id, "question": room.question, "answer": room.answer}
 
+@app.post("/api/admin/expand-answers")
+def expand_all_answers(db: Session = Depends(database.get_db)):
+    rooms = db.query(models.Room).filter(models.Room.id != 1).all()
+    updated_count = 0
+    
+    for r in rooms:
+        if ',' not in r.answer:
+            try:
+                prompt = (
+                    f'Riddle: "{r.question}"\n'
+                    f'Original Answer: "{r.answer}"\n'
+                    f'Provide 2-3 single-word synonyms or alternative valid answers to this riddle that mean the same thing.\n'
+                    f'Format: Return ONLY a comma-separated list including the original answer. (e.g. "word1,word2,word3").\n'
+                    f'Do not include any other text or punctuation.'
+                )
+                response = _gemini_model.generate_content(prompt)
+                expanded = response.text.strip().lower()
+                expanded = expanded.replace('.', '').replace('"', '').replace(' ', '')
+                if r.answer not in expanded:
+                    expanded = f"{r.answer},{expanded}"
+                
+                r.answer = expanded
+                updated_count += 1
+            except Exception as e:
+                print(f"Failed to expand room {r.id}: {e}")
+                
+    db.commit()
+    return {"message": f"Successfully expanded answers for {updated_count} rooms."}
+
 @app.post("/api/analyze")
 def analyze_text(request: schemas.AnalyzeRequest):
     sentiment = "neutral"
