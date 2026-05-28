@@ -353,8 +353,9 @@ def solve_door(door_id: int, request: schemas.GuessRequest, db: Session = Depend
 
         # ─────────────────────────────────────────────────────────────────
         pts = 20 if getattr(door, 'is_paradox', False) else 10
-        msg = f"⚡ Someone solved Room #{door.id} and earned {pts} points!" if not already_solved else \
-              f"🔄 Someone revisited Room #{door.id} (no bonus points)."
+        solver = request.username or "Someone"
+        msg = f"⚡ {solver} solved Room #{door.id} and earned {pts} points!" if not already_solved else \
+              f"🔄 {solver} revisited Room #{door.id} (no bonus points)."
         log = models.ActivityLog(message=msg)
         db.add(log)
         db.commit()
