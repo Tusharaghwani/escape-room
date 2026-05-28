@@ -475,8 +475,8 @@ function renderCustomNode({ nodeDatum, toggleNode }, heatmap, currentRoomId, han
 /* ── Main App ────────────────────────────────────────────────────── */
 function About({ onBack, isExiting }) {
   return (
-    <div className={`about-page-container ${isExiting ? 'exit' : ''}`}>
-      <div className="max-w-[800px] mx-auto px-6 py-20 text-slate-300 font-mono">
+    <div className={`about-page-container ${isExiting ? 'exit' : ''} relative pb-24`}>
+      <div className="max-w-[800px] mx-auto px-6 py-20 text-slate-300 font-mono relative z-10">
         
         <button onClick={onBack} className="badge hover:bg-white/10 transition-colors mb-12 flex items-center gap-2" style={{ cursor: 'pointer', background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.2)', color: 'white', border: '1px solid', padding: '8px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>
           ← RETURN TO THE MAZE
@@ -545,6 +545,12 @@ function About({ onBack, isExiting }) {
           </p>
         </section>
 
+      </div>
+      
+      {/* River Effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 overflow-hidden pointer-events-none z-0">
+        <div className="river-flow layer2"></div>
+        <div className="river-flow"></div>
       </div>
     </div>
   );

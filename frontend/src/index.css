@@ -92,6 +92,61 @@
   100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
+/* ── Ambient Wind Effect ────────────────────────────────────── */
+.wind-streak {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: windDrift linear infinite;
+  filter: blur(1px);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+@keyframes windDrift {
+  0% { transform: translateX(-20vw); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(120vw); opacity: 0; }
+}
+
+/* ── River Effect ─────────────────────────────────────────────── */
+.river-flow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(90deg, 
+    rgba(0, 212, 255, 0) 0%, 
+    rgba(0, 212, 255, 0.4) 25%, 
+    rgba(0, 212, 255, 0.8) 50%, 
+    rgba(0, 212, 255, 0.4) 75%, 
+    rgba(0, 212, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: flowRiver 5s linear infinite;
+  filter: blur(12px);
+  opacity: 0.6;
+}
+.river-flow.layer2 {
+  height: 80px;
+  opacity: 0.3;
+  animation: flowRiver 8s linear infinite reverse;
+  filter: blur(20px);
+  background: linear-gradient(90deg, 
+    rgba(99, 91, 255, 0) 0%, 
+    rgba(99, 91, 255, 0.4) 25%, 
+    rgba(99, 91, 255, 0.8) 50%, 
+    rgba(99, 91, 255, 0.4) 75%, 
+    rgba(99, 91, 255, 0) 100%
+  );
+}
+@keyframes flowRiver {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 html { scroll-behavior: smooth; }
 
 body {
