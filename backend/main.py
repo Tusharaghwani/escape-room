@@ -644,6 +644,22 @@ def get_leaderboard(db: Session = Depends(database.get_db)):
     users = db.query(models.User).order_by(models.User.points.desc()).limit(10).all()
     return users
 
+@app.get("/api/admin/debug_users")
+def get_debug_users(db: Session = Depends(database.get_db)):
+    users = db.query(models.User).all()
+    solved = db.execute(text("SELECT username, min(created_at) as first_solve FROM user_solved_rooms GROUP BY username")).fetchall()
+    solve_times = {row[0]: row[1] for row in solved}
+    
+    result = []
+    for u in users:
+        result.append({
+            "id": u.id,
+            "username": u.username,
+            "points": u.points,
+            "first_solve": solve_times.get(u.username, None)
+        })
+    return result
+
 # --- ML Status Endpoint (for evaluators / transparency) ---
 
 @app.get("/api/ml/status")
